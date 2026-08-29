@@ -25,7 +25,7 @@
   *{box-sizing:border-box; margin:0; padding:0;}
 body{
   font-family:'Inter', sans-serif;
-  background:#080808;
+  background:#080808 url("joyfull-gold-bg.jpg") center top / cover fixed no-repeat;
   color:var(--white);
   line-height:1.5;
   padding-bottom:76px;
@@ -88,17 +88,14 @@ body{
  .profile{
   text-align:center;
   padding:28px 6vw 20px;
-  background:
-    radial-gradient(circle at 80% 25%, #D4AF3740 0%, transparent 35%),
-    radial-gradient(circle at 15% 80%, #D4AF3725 0%, transparent 30%),
-    linear-gradient(145deg, #050505 0%, #111111 48%, #050505 100%);
+  background:transparent;
   border-bottom:1px solid #5A4512;
   position:relative;
   overflow:hidden;
-}
- avatar{
-  width:88px;
-  height:88px;
+ }
+ .avatar{
+  width:72px;
+  height:72px;
   border-radius:50%;
   background:#080808;
   margin:0 auto 14px;
@@ -110,7 +107,7 @@ body{
     0 0 0 1px #D4AF37,
     0 0 20px #D4AF3740;
   overflow:hidden;
-}
+ }
 .profile h1{
   font-size:1.7rem;
   color:#FFFFFF;
@@ -136,11 +133,19 @@ body{
   font-size:1.2rem;
   text-decoration:none;
   box-shadow:0 0 8px #D4AF3718;
-}
+}.socials{
+  display:flex;
+  flex-direction:row;
+  flex-wrap:nowrap;
+  justify-content:center;
+  align-items:center;
+  gap:12px;
+  width:100%;
+  }
  section{
   padding:32px 5vw;
-  background:#080808;
-}
+  background:transparent;
+ }
   .section-head{margin-bottom:16px;}
 .section-head h2{
   font-size:1.3rem;
@@ -158,7 +163,7 @@ body{
     gap:12px;
   }
   .cat-card{
-   .cat-card{
+  .cat-card{
   background:#F8F6F0;
   color:#181818;
   border:2px solid #E6E0D4;
@@ -167,6 +172,7 @@ body{
   text-align:center;
   cursor:pointer;
   transition:transform .15s ease, border-color .15s ease, box-shadow .15s ease;
+  } 
 } border-radius:16px;
     padding:16px 8px; text-align:center; cursor:pointer;
     transition:transform .15s ease, border-color .15s ease;
@@ -196,12 +202,13 @@ body{
   padding:16px;
   text-align:center;
   cursor:pointer;
-  transition:transform .15s ease, border-color .15s ease;
-}
+  transition:transform .15s ease, border-color .15s ease, box-shadow .15s ease;
+ }
 
 .shop-card:hover{
   transform:translateY(-2px);
   border-color:#D4AF37;
+  box-shadow:0 0 14px #D4AF3730;
 }
 
 .shop-card.empty{
@@ -313,18 +320,25 @@ body{
   right:0;
   height:100%;
   width:min(380px, 92vw);
-  background:#0B0B0B;
+  background:
+    linear-gradient(160deg,#050505 0%,#111111 50%,#050505 100%);
   color:#F8F6F0;
   z-index:101;
   transform:translateX(100%);
   transition:transform .25s ease;
   display:flex;
   flex-direction:column;
-  box-shadow:-6px 0 24px #000;
-  border-left:1px solid #5A4512;
-}
-  #cart-drawer.open{transform:translateX(0);}
-  .cart-head{padding:20px 22px; border-bottom:1px solid #EFE6D8; display:flex; justify-content:space-between; align-items:center;}
+  box-shadow:-6px 0 30px #000;
+  border-left:1px solid #D4AF37;
+ }
+  #cart-drawer.open{transform:translateX(0);}.cart-head{padding:20px 22px; border-bottom:1p
+  .cart-head{
+  padding:20px 22px;
+  border-bottom:1px solid #5A4512;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  }
   .cart-head h3{font-size:1.1rem;}
  #close-cart{
   background:none;
@@ -353,11 +367,12 @@ body{
   font-size:0.9rem;
   cursor:pointer;
   font-family:'Inter', sans-serif;
+  box-shadow:0 4px 18px #D4AF3735;
 }
 
 #checkout-btn:disabled{
   background:#444;
-  color:#999;
+  colo
   cursor:not-allowed;
 }
 
@@ -387,10 +402,10 @@ body{
   <h1>JOYFULL</h1>
   <p class="bio">Ventes et achats, bons articles Lubumbashi 🛍️</p>
   <div class="socials">
-    <a href="https://wa.me/243835276978" class="social-square" title="WhatsApp"><img src="whatsapp-logo.png" style="width:24px;height:24px;"></a>
-    <a href="https://tiktok.com/@joyfull31088" class="social-square" title="TikTok"><img src="tiktok-logo.png" style="width:24px;height:24px;"></a>
-    <a href="https://www.instagram.com/lumen_kaizen?igsi=MWZ5Zjk3N3lyNnk1eA==" class="social-square" title="Instagram"><img src="instagram-logo.png" style="width:24px;height:24px;"></a>
-    <a href="https://www.facebook.com/profile.php?id=61593531285715" class="social-square" title="Facebook"><img src="facebook-logo.png" style="width:24px;height:24px;"></a>
+    <a href="https://wa.me/243835276978" class="social-square" title="WhatsApp"><img src="whatsapp-logo.png" style="width:26px;height:26px;"></a>
+    <a href="https://tiktok.com/@joyfull31088" class="social-square" title="TikTok"><img src="tiktok-logo.png" style="width:26px;height:26px;"></a>
+    <a href="https://www.instagram.com/lumen_kaizen?igsi=MWZ5Zjk3N3lyNnk1eA==" class="social-square" title="Instagram"><img src="instagram-logo.png" style="width:26px;height:26px;"></a>
+    <a href="https://www.facebook.com/profile.php?id=61593531285715" class="social-square" title="Facebook"><img src="facebook-logo.png" style="width:26px;height:26px;"></a>
   </div>
 </div>
 
