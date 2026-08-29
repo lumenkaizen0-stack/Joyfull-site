@@ -162,6 +162,7 @@ body{
     display:grid; grid-template-columns:repeat(auto-fit, minmax(90px,1fr));
     gap:12px;
   }
+  
   .cat-card{
   .cat-card{
   background:#F8F6F0;
@@ -172,15 +173,17 @@ body{
   text-align:center;
   cursor:pointer;
   transition:transform .15s ease, border-color .15s ease, box-shadow .15s ease;
-  } 
-} border-radius:16px;
-    padding:16px 8px; text-align:center; cursor:pointer;
-    transition:transform .15s ease, border-color .15s ease;
-  }
- .cat-card.active{
+}
+
+.cat-card.active{
   border-color:#D4AF37;
   background:#F8F6F0;
-  box-shadow:0 0 14px #D4AF3738;
+  box-shadow:0 0 14px #D4AF3740;
+}
+
+.cat-card:hover{
+  transform:translateY(-2px);
+  border-color:#D4AF37;
 }
  .cat-card:hover{
   transform:translateY(-2px);
