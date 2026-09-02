@@ -494,8 +494,29 @@ footer{padding:20px 5vw 90px;text-align:center;color:#C8C1AE;font-size:.8rem;bac
   const auth = getAuth(app);
 
 
-  // TEST FIREBASE
-  console.log("🔥 Firebase JOYFULL connecté !");
+ // ================= TEST FIRESTORE =================
+
+async function testerFirestore() {
+  try {
+    const testRef = doc(db, "tests", "connexion");
+
+    await setDoc(testRef, {
+      message: "JOYFULL est connecté à Firestore 🔥",
+      ville: "Lubumbashi",
+      date: serverTimestamp()
+    });
+
+    console.log("🔥 Donnée envoyée avec succès dans Firestore !");
+  } catch (error) {
+    console.error("❌ Erreur Firestore :", error);
+  }
+}
+
+
+// TEST FIREBASE
+console.log("🔥 Firebase JOYFULL connecté !");
+
+testerFirestore();
 </script>
 </body>
 </html>
