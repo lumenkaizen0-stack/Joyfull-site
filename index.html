@@ -447,6 +447,55 @@ footer{padding:20px 5vw 90px;text-align:center;color:#C8C1AE;font-size:.8rem;bac
   renderShops();
   renderCart();
 </script>
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-app.js";
 
+  import {
+    getFirestore,
+    collection,
+    getDocs,
+    addDoc,
+    doc,
+    getDoc,
+    setDoc,
+    serverTimestamp
+  } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-firestore.js";
+
+  import {
+    getAuth,
+    createUserWithEmailAndPassword,
+    signInWithEmailAndPassword,
+    onAuthStateChanged,
+    signOut
+  } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-auth.js";
+
+
+  // ================= FIREBASE CONFIG =================
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyCmzbxSA6sKCbIKVL1vw3zLk1cP_zqs_ns",
+    authDomain: "joyfull-a1fba.firebaseapp.com",
+    projectId: "joyfull-a1fba",
+    storageBucket: "joyfull-a1fba.firebasestorage.app",
+    messagingSenderId: "1081441505666",
+    appId: "1:1081441505666:web:bf7703a0ef8b9be2d23f9b"
+  };
+
+
+  // Démarrage Firebase
+  const app = initializeApp(firebaseConfig);
+
+
+  // Base de données Joyfull
+  const db = getFirestore(app);
+
+
+  // Authentification Joyfull
+  const auth = getAuth(app);
+
+
+  // TEST FIREBASE
+  console.log("🔥 Firebase JOYFULL connecté !");
+</script>
 </body>
 </html>
