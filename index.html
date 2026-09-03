@@ -426,18 +426,102 @@ footer{padding:20px 5vw 90px;text-align:center;color:#C8C1AE;font-size:.8rem;bac
     document.getElementById('cart-overlay').classList.toggle('open', open);
   }
 
-  function confirmOrder(){
-    if(Object.keys(cart).length === 0) return;
-    const orderId = '#' + Math.floor(1000 + Math.random() * 9000);
+[11:59 AM, 03/09/2026] Ben Baruti: window.serverTimestamp = serverTimestamp;
+[12:02 PM, 03/09/2026] Ben Baruti: async function confirmOrder(){
+
+  // Vérifie si le panier contient quelque chose
+  if(Object.keys(cart).length === 0) return;
+
+  try {
+
+    // Récupère tous les produits disponibles
+    const products = allProducts();
+
+    // Prépare les produits de la commande
+    const orderItems = Object.keys(cart).map(id => {
+
+      const product = products.find(p => p.id == id);
+      const quantity = cart[id];
+
+      return {
+        productId: product.id,
+        name: product.name,
+        shopName: product.shopName,
+        price: product.price,
+        quantity: quantity,
+        subtotal: product.price * quantity
+      };
+
+    });
+
+    // Calcule le prix total
+    const total = orderItems.reduce(
+      (sum, item) => sum + item.subtotal,
+      0
+    );
+
+    // Crée un numéro visible pour la commande
+    const orderId = '#' + Math.floor(
+      1000 + Math.random() * 9000
+    );
+
+    // ================= FIRESTORE =================
+
+    const orderRef = await window.addDoc(
+      window.collection(window.db, "orders"),
+      {
+
+        orderId: orderId,
+
+        items: orderItems,
+
+        total: total,
+
+        status: "Nouvelle commande",
+
+        createdAt: window.serverTimestamp()
+
+      }
+    );
+
+    // =============================================
+
+    console.log(
+      "🔥 Commande enregistrée dans Firestore !",
+      orderRef.id
+    );
+
+    // Affiche le numéro de commande
     document.getElementById('order-id').textContent = orderId;
-    document.getElementById('confirm-overlay').classList.add('open');
+
+    // Affiche la confirmation
+    document
+      .getElementById('confirm-overlay')
+      .classList.add('open');
+
+    // Ferme le panier
     toggleCart(false);
+
+    // Vide le panier
     cart = {};
+
+    // Actualise le panier
     renderCart();
-    // NOTE pour plus tard : c'est ici qu'on branchera l'envoi réel
-    // de la commande vers un backend (Google Sheets / Firebase)
-    // pour que l'équipe JOYFULL reçoive la commande automatiquement.
+
+  } catch(error) {
+
+    console.error(
+      "❌ Erreur lors de l'enregistrement de la commande :",
+      error
+    );
+
+    alert(
+      "Impossible d'enregistrer la commande. Vérifie ta connexion Internet."
+    );
+
   }
+
+}
 
   function closeConfirm(){
     document.getElementById('confirm-overlay').classList.remove('open');
@@ -490,10 +574,14 @@ footer{padding:20px 5vw 90px;text-align:center;color:#C8C1AE;font-size:.8rem;bac
   const db = getFirestore(app);
 
 
-  // Authentification Joyfull
-  const auth = getAuth(app);
+// Authentification Joyfull
+const auth = getAuth(app);
 
-
+// Rend Firebase accessible au script principal
+window.db = db;
+window.addDoc = addDoc;
+window.collection = collection;
+window.serverTimestamp = serverTimestamp;
  // ================= TEST FIRESTORE =================
 
 async function testerFirestore() {
