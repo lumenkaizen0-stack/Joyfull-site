@@ -541,17 +541,16 @@ footer{padding:20px 5vw 90px;text-align:center;color:#C8C1AE;font-size:.8rem;bac
   renderShops();
   renderCart();
 </script>
-
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-app.js";
   import {
     getFirestore,
     collection,
-    getDocs,
     addDoc,
     query,
     orderBy,
-    serverTimestamp
+    serverTimestamp,
+    onSnapshot
   } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-firestore.js";
 
   const firebaseConfig = {
@@ -571,19 +570,19 @@ footer{padding:20px 5vw 90px;text-align:center;color:#C8C1AE;font-size:.8rem;bac
   window.collection = collection;
   window.serverTimestamp = serverTimestamp;
 
-  async function loadComments() {
+  // Écouteur en temps réel pour l'Espace Discussions & Commentaires
+  function listenToComments() {
     const listEl = document.getElementById('comments-list');
-    try {
-      const q = query(collection(db, "comments"), orderBy("createdAt", "desc"));
-      const querySnapshot = await getDocs(q);
-      
-      if(querySnapshot.empty) {
+    const q = query(collection(db, "comments"), orderBy("createdAt", "desc"));
+
+    onSnapshot(q, (snapshot) => {
+      if (snapshot.empty) {
         listEl.innerHTML = '<div style="color:#888;font-size:.85rem;">Aucun commentaire pour le moment. Soyez le premier !</div>';
         return;
       }
 
       let html = '';
-      querySnapshot.forEach((doc) => {
+      snapshot.forEach((doc) => {
         const data = doc.data();
         const dateStr = data.createdAt ? new Date(data.createdAt.seconds * 1000).toLocaleDateString("fr-FR") : "À l'instant";
         html += `
@@ -597,14 +596,12 @@ footer{padding:20px 5vw 90px;text-align:center;color:#C8C1AE;font-size:.8rem;bac
         `;
       });
       listEl.innerHTML = html;
-    } catch(e) {
-      console.error("❌ Erreur chargement commentaires :", e);
-      listEl.innerHTML = '<div style="color:#888;font-size:.85rem;">Erreur de chargement des discussions.</div>';
-    }
+    }, (error) => {
+      console.error("❌ Erreur de synchronisation :", error);
+    });
   }
 
-  window.loadComments = loadComments;
-  loadComments();
+  listenToComments();
 </script>
 </body>
 </html>
