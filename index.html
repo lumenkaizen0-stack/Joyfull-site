@@ -11,7 +11,6 @@
   --gold:#D4AF37;
   --gold-light:#F1D77A;
   --black:#080808;
-  --black-soft:#111111;
   --white:#F8F6F0;
   --sub:#C8C1AE;
 }
@@ -19,7 +18,7 @@
 html{scroll-behavior:smooth;}
 body{
   font-family:'Inter',sans-serif;
-  background:#050505 url("joyfull-gold-bg.jpg") center top / cover fixed no-repeat;
+  background:#050505;
   color:var(--white);
   line-height:1.5;
   min-height:100vh;
@@ -27,151 +26,103 @@ body{
 }
 h1,h2,h3,.brand{font-family:'Baloo 2',sans-serif;}
 img{max-width:100%;display:block;}
-button,a{ -webkit-tap-highlight-color:transparent; }
 
 /* NAVIGATION */
 nav{
   position:sticky;top:0;z-index:50;
   display:flex;justify-content:space-between;align-items:center;
   padding:12px 5vw;
-  background:rgba(5,5,5,.88);
+  background:rgba(5,5,5,.92);
   backdrop-filter:blur(8px);
   border-bottom:1px solid #5A4512;
-  box-shadow:0 2px 15px #000;
 }
-.brand{font-size:1.3rem;font-weight:800;color:var(--gold-light);display:flex;align-items:center;gap:4px;}
+.brand{font-size:1.3rem;font-weight:800;color:var(--gold-light);}
 .brand span{color:#fff;}
-.brand img{width:22px;height:22px;object-fit:contain;}
+
 #cart-btn{
-  position:relative;background:#080808;color:var(--white);
-  border:1px solid var(--gold);border-radius:14px;padding:9px 16px;
-  font-weight:600;font-size:.88rem;cursor:pointer;font-family:'Inter',sans-serif;
-  box-shadow:0 0 12px #D4AF3722;
-}
-#cart-count{
-  position:absolute;top:-8px;right:-8px;background:var(--gold);color:#080808;
-  font-size:.68rem;font-weight:700;width:19px;height:19px;border-radius:50%;
-  display:flex;align-items:center;justify-content:center;
+  background:#080808;color:var(--white);
+  border:1px solid var(--gold);border-radius:14px;padding:8px 14px;
+  font-weight:600;font-size:.88rem;cursor:pointer;
 }
 
-/* PROFIL HEADER */
+/* HEADER & ACTIONS */
 .profile{
   text-align:center;padding:24px 6vw 20px;
-  background:rgba(0,0,0,.30);
+  background:rgba(0,0,0,.4);
   border-bottom:1px solid #5A4512;
-  position:relative;overflow:hidden;
 }
-.profile::before{
-  content:"";position:absolute;inset:0;pointer-events:none;
-  background:radial-gradient(circle at 50% 35%,rgba(212,175,55,.16),transparent 48%);
-}
-.profile>*{position:relative;z-index:1;}
 .avatar{
-  width:90px;height:90px;border-radius:50%;background:#080808;
+  width:80px;height:80px;border-radius:50%;background:#111;
   margin:0 auto 10px;display:flex;align-items:center;justify-content:center;
-  box-shadow:0 0 0 1px var(--gold),0 0 20px #D4AF3755;overflow:hidden;
+  border:2px solid var(--gold);font-size:2rem;
 }
-.avatar img{width:100%;height:100%;object-fit:cover;border-radius:50%;}
-.profile h1{font-size:1.6rem;color:#fff;margin-bottom:4px;font-weight:800;letter-spacing:.5px;text-shadow:0 2px 10px #000;}
-.profile p.bio{color:#E3DED2;font-size:.88rem;max-width:340px;margin:0 auto 12px;text-shadow:0 2px 8px #000;}
+.profile h1{font-size:1.5rem;color:#fff;}
+.profile p.bio{color:var(--sub);font-size:.85rem;margin-bottom:12px;}
 
-/* BARRE D'ACTIONS SOUS LE HEADER (Connexion & Commentaires) */
 .header-actions{
-  display:flex;justify-content:center;gap:10px;margin-top:10px;flex-wrap:wrap;
+  display:flex;justify-content:center;gap:10px;flex-wrap:wrap;
 }
 .btn-action{
   background:linear-gradient(135deg,var(--gold),var(--gold-light));
-  color:#080808;border:none;border-radius:12px;padding:9px 16px;
-  font-weight:700;font-size:.82rem;cursor:pointer;font-family:'Inter',sans-serif;
-  box-shadow:0 2px 10px rgba(212,175,55,0.3);
+  color:#080808;border:none;border-radius:10px;padding:8px 14px;
+  font-weight:700;font-size:.8rem;cursor:pointer;
 }
 .btn-action-outline{
   background:#080808;color:var(--gold-light);border:1px solid var(--gold);
-  border-radius:12px;padding:9px 16px;font-weight:700;font-size:.82rem;
-  cursor:pointer;font-family:'Inter',sans-serif;
+  border-radius:10px;padding:8px 14px;font-weight:700;font-size:.8rem;cursor:pointer;
 }
 
-/* SECTIONS & GRILLES */
-section{padding:26px 5vw;background:rgba(0,0,0,.34);border-bottom:1px solid #2A2110;}
-.section-head{margin-bottom:14px;}
-.section-head h2{font-size:1.25rem;color:#fff;}
-.section-head p{color:#D3CDBE;font-size:.82rem;}
+/* SECTIONS */
+section{padding:20px 5vw;border-bottom:1px solid #2A2110;}
+.section-head{margin-bottom:12px;}
+.section-head h2{font-size:1.2rem;color:#fff;}
 
-.cat-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;}
-.cat-card{background:#F8F6F0;color:#181818;border:2px solid #E6E0D4;border-radius:14px;padding:10px 4px;text-align:center;cursor:pointer;}
-.cat-card.active{border-color:var(--gold);box-shadow:0 0 12px #D4AF3760;}
-.cat-emoji{font-size:1.5rem;margin-bottom:4px;}
-.cat-name{font-weight:600;font-size:.72rem;}
+.cat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;}
+.cat-card{background:#111;border:1px solid #3A3018;border-radius:12px;padding:10px 4px;text-align:center;cursor:pointer;}
+.cat-card.active{border-color:var(--gold);background:#1a1508;}
+.cat-emoji{font-size:1.4rem;}
+.cat-name{font-size:.7rem;font-weight:600;margin-top:4px;}
 
-.shops-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;}
-.shop-card{background:#F8F6F0;color:#181818;border:2px solid #5A4512;border-radius:14px;padding:14px;text-align:center;cursor:pointer;}
-.shop-card.empty{border-style:dashed;color:#C8C1AE;background:#111;cursor:default;}
-.shop-logo{width:48px;height:48px;border-radius:50%;background:#111;border:1px solid var(--gold);margin:0 auto 8px;display:flex;align-items:center;justify-content:center;font-size:1.3rem;}
-.shop-name{font-weight:700;font-size:.88rem;}
-.shop-sub{font-size:.72rem;color:#6E6658;}
+.shops-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;}
+.shop-card{background:#111;border:1px solid #3A3018;border-radius:12px;padding:12px;text-align:center;}
 
-/* PANNEAU PRODUITS ET TCHAT */
-#shop-panel{display:none;background:rgba(8,8,8,.94);color:var(--white);border:1px solid #5A4512;border-radius:18px;padding:18px;margin-top:16px;}
-#shop-panel.open{display:block;}
-.shop-panel-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;}
-.btn-chat-vendeur{background:#25D366;color:#fff;border:none;border-radius:10px;padding:6px 12px;font-weight:700;font-size:.75rem;cursor:pointer;margin-bottom:12px;display:inline-flex;align-items:center;gap:6px;}
-
-.products-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px;}
-.product-card{background:#ffffff0d;border:1px solid #5A4512;border-radius:12px;padding:10px;}
-.product-emoji{font-size:1.6rem;margin-bottom:6px;}
-.product-card h4{font-size:.82rem;}
-.product-price{color:var(--gold-light);font-weight:700;font-size:.8rem;margin-bottom:8px;}
-.add-btn{width:100%;background:linear-gradient(135deg,var(--gold),var(--gold-light));color:#080808;border:none;border-radius:8px;padding:6px;font-weight:700;font-size:.75rem;cursor:pointer;}
-
-/* MODALES / POP-UPS (COMMENTAIRES & CONNEXION) */
-.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.85);display:none;z-index:200;align-items:center;justify-content:center;padding:16px;backdrop-filter:blur(4px);}
+/* MODALES */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.85);display:none;z-index:200;align-items:center;justify-content:center;padding:16px;}
 .modal-overlay.open{display:flex;}
-.modal-box{background:#0B0B0B;color:var(--white);border:1px solid var(--gold);border-radius:20px;padding:22px;max-width:400px;width:100%;max-height:85vh;overflow-y:auto;box-shadow:0 0 30px #000;position:relative;}
-.modal-close{position:absolute;top:14px;right:16px;background:none;border:none;color:var(--gold-light);font-size:1.2rem;cursor:pointer;}
-.modal-box h3{font-size:1.15rem;color:var(--gold-light);margin-bottom:12px;}
+.modal-box{background:#0B0B0B;border:1px solid var(--gold);border-radius:16px;padding:20px;max-width:380px;width:100%;position:relative;}
+.modal-close{position:absolute;top:10px;right:14px;background:none;border:none;color:var(--gold-light);font-size:1.2rem;cursor:pointer;}
 
-.form-group{margin-bottom:12px;}
-.form-group label{display:block;font-size:.78rem;color:var(--sub);margin-bottom:4px;}
+.form-group{margin-bottom:10px;}
+.form-group label{display:block;font-size:.75rem;color:var(--sub);margin-bottom:4px;}
 .form-group input, .form-group select, .form-group textarea{
-  width:100%;background:#141414;border:1px solid #5A4512;border-radius:10px;padding:10px;color:#fff;font-family:'Inter',sans-serif;font-size:.85rem;
+  width:100%;background:#141414;border:1px solid #5A4512;border-radius:8px;padding:8px;color:#fff;font-size:.82rem;
 }
-.form-submit{width:100%;background:linear-gradient(135deg,var(--gold),var(--gold-light));color:#080808;border:none;border-radius:10px;padding:11px;font-weight:700;font-size:.88rem;cursor:pointer;margin-top:6px;}
+.form-submit{width:100%;background:linear-gradient(135deg,var(--gold),var(--gold-light));color:#080808;border:none;border-radius:8px;padding:10px;font-weight:700;font-size:.85rem;cursor:pointer;margin-top:6px;}
 
-.comments-list{display:flex;flex-direction:column;gap:10px;margin-top:14px;}
-.comment-card{background:rgba(255,255,255,0.05);border:1px solid #3A3018;border-radius:10px;padding:10px;}
-.comment-header{display:flex;justify-content:space-between;margin-bottom:4px;font-size:.75rem;}
-.comment-author{font-weight:700;color:var(--gold-light);}
-.comment-date{color:#888;}
-.comment-body{font-size:.82rem;color:#E3DED2;}
+.comments-list{display:flex;flex-direction:column;gap:8px;margin-top:12px;max-height:200px;overflow-y:auto;}
+.comment-card{background:#141414;border:1px solid #2A2110;border-radius:8px;padding:8px;}
+.comment-author{font-weight:700;color:var(--gold-light);font-size:.75rem;}
+.comment-body{font-size:.8rem;color:#E3DED2;}
 
-/* FOOTER & PANIER */
-footer{padding:20px 5vw 90px;text-align:center;color:#C8C1AE;font-size:.8rem;}
-#cart-overlay{position:fixed;inset:0;background:#00000088;display:none;z-index:100;}
-#cart-overlay.open{display:block;}
-#cart-drawer{position:fixed;top:0;right:0;height:100%;width:min(380px,90vw);background:#080808;color:var(--white);z-index:101;transform:translateX(100%);transition:transform .25s ease;display:flex;flex-direction:column;border-left:1px solid var(--gold);}
-#cart-drawer.open{transform:translateX(0);}
-.cart-head{padding:18px;border-bottom:1px solid #5A4512;display:flex;justify-content:space-between;align-items:center;}
-#cart-items{flex:1;overflow-y:auto;padding:14px;}
-.cart-item{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid #2A2110;}
-.cart-foot{padding:16px;border-top:1px solid #5A4512;background:#080808;}
-#checkout-btn{width:100%;background:linear-gradient(135deg,var(--gold),var(--gold-light));color:#080808;border:none;border-radius:12px;padding:12px;font-weight:700;cursor:pointer;}
+/* LIENS SOCIAUX JOYFULL OFFICIAL */
+.social-links{display:flex;justify-content:center;gap:12px;margin-top:10px;}
+.social-btn{color:var(--gold-light);text-decoration:none;font-size:.8rem;border:1px solid #3A3018;padding:4px 8px;border-radius:6px;}
 </style>
 </head>
 <body>
 
 <nav>
-  <div class="brand">JOY<span>FULL</span> <img src="symbole-joyfull.png" style="width:22px;height:22px;vertical-align:middle;"></div>
-  <button id="cart-btn" onclick="toggleCart(true)">🛒 Panier <span id="cart-count">0</span></button>
+  <div class="brand">JOY<span>FULL</span></div>
+  <button id="cart-btn">🛒 Panier (0)</button>
 </nav>
 
 <div class="profile">
-  <div class="avatar"><img src="joyfull.png" style="width:100%;height:100%;object-fit:cover;border-radius:50%;"></div>
-  <h1>JOYFULL</h1>
-  <p class="bio">Ventes et achats, bons articles Lubumbashi 🛍️</p>
+  <div class="avatar">🛍️</div>
+  <h1 id="user-display-name">JOYFULL</h1>
+  <p class="bio">Plateforme d'achats et ventes à Lubumbashi</p>
 
-  <!-- NOUVEAUX BOUTONS D'ACTION SOUS LE HEADER -->
   <div class="header-actions">
-    <button class="btn-action" onclick="openAuthModal()">🔑 S'inscrire / Connexion</button>
+    <button class="btn-action" id="auth-btn" onclick="openAuthModal()">🔑 S'inscrire / Connexion</button>
     <button class="btn-action-outline" onclick="openCommentsModal()">💬 Avis & Discussions</button>
   </div>
 </div>
@@ -179,46 +130,45 @@ footer{padding:20px 5vw 90px;text-align:center;color:#C8C1AE;font-size:.8rem;}
 <section id="categories">
   <div class="section-head">
     <h2>Catégories</h2>
-    <p>Choisis une catégorie pour voir les boutiques.</p>
   </div>
   <div class="cat-grid" id="cat-grid"></div>
-
-  <div id="shop-panel">
-    <div class="shop-panel-head">
-      <h3 id="shop-panel-title">Boutique</h3>
-      <button onclick="closeShopPanel()" style="background:none;border:none;color:var(--gold-light);font-size:1.2rem;">✕</button>
-    </div>
-    <!-- BOUTON DE DISCUSSION AVEC LE VENDEUR DE LA BOUTIQUE -->
-    <button class="btn-chat-vendeur" onclick="openVendorChat()">💬 Discuter avec ce vendeur</button>
-    <div class="products-grid" id="shop-products"></div>
-  </div>
 </section>
 
 <section id="shops-section">
   <div class="section-head">
-    <h2 id="shops-title">Boutiques</h2>
-    <p id="shops-sub">Toutes les boutiques disponibles.</p>
+    <h2>Boutiques & Restaurants</h2>
   </div>
   <div class="shops-grid" id="shops-grid"></div>
 </section>
-
-<footer>JOYFULL · Lubumbashi 🇨🇩</footer>
 
 <!-- MODALE D'INSCRIPTION / CONNEXION -->
 <div class="modal-overlay" id="auth-modal">
   <div class="modal-box">
     <button class="modal-close" onclick="closeAuthModal()">✕</button>
-    <h3>Rejoindre JOYFULL</h3>
+    <h3>Créer un compte Joyfull</h3>
+    
     <div class="form-group">
       <label>Type de compte</label>
-      <select id="auth-role">
-        <option value="client">Client (Acheteur)</option>
-        <option value="vendeur">Vendeur (Boutique)</option>
+      <select id="auth-role" onchange="toggleVendorCategory()">
+        <option value="client">Compte Acheteur (Client)</option>
+        <option value="vendeur">Compte Vendeur (Boutique/Resto)</option>
       </select>
     </div>
+
+    <!-- SELECTION DE CATEGORIE (VISIBLE UNIQUEMENT SI VENDEUR) -->
+    <div class="form-group" id="vendor-cat-group" style="display:none;">
+      <label>Catégorie de votre activité</label>
+      <select id="auth-vendor-cat">
+        <option value="restaurants">Restaurants</option>
+        <option value="boutiques">Boutique (Mode/Accessoires)</option>
+        <option value="electronique">Électronique</option>
+        <option value="beaute">Beauté & Soins</option>
+      </select>
+    </div>
+
     <div class="form-group">
-      <label>Nom complet ou Nom de boutique</label>
-      <input type="text" id="auth-name" placeholder="Ex: Jean DRC ou Boutique Lumière">
+      <label>Nom complet ou Nom du commerce</label>
+      <input type="text" id="auth-name" placeholder="Ex: Jean DRC ou Resto DRC">
     </div>
     <div class="form-group">
       <label>Email</label>
@@ -228,7 +178,7 @@ footer{padding:20px 5vw 90px;text-align:center;color:#C8C1AE;font-size:.8rem;}
       <label>Mot de passe</label>
       <input type="password" id="auth-password" placeholder="******">
     </div>
-    <button class="form-submit" onclick="handleSignUp()">Créer mon compte</button>
+    <button class="form-submit" onclick="handleSignUp()">Valider mon inscription</button>
   </div>
 </div>
 
@@ -238,49 +188,27 @@ footer{padding:20px 5vw 90px;text-align:center;color:#C8C1AE;font-size:.8rem;}
     <button class="modal-close" onclick="closeCommentsModal()">✕</button>
     <h3>Avis & Discussions publiques</h3>
     <div class="form-group">
-      <input type="text" id="comment-name" placeholder="Ton nom ou pseudo">
+      <input type="text" id="comment-name" placeholder="Ton nom">
     </div>
     <div class="form-group">
-      <textarea id="comment-text" placeholder="Écris ton avis sur Joyfull..." style="height:70px;"></textarea>
+      <textarea id="comment-text" placeholder="Écris ton avis..." style="height:60px;"></textarea>
     </div>
-    <button class="form-submit" onclick="postComment()">Publier l'avis</button>
+    <button class="form-submit" onclick="postComment()">Publier</button>
     
-    <div class="comments-list" id="comments-list">
-      <div style="color:#888;font-size:.8rem;">Chargement des avis...</div>
-    </div>
-  </div>
-</div>
-
-<!-- PANIER -->
-<div id="cart-overlay" onclick="toggleCart(false)"></div>
-<div id="cart-drawer">
-  <div class="cart-head">
-    <h3 style="color:var(--gold-light)">Ton panier</h3>
-    <button onclick="toggleCart(false)" style="background:none;border:none;color:var(--gold-light);font-size:1.2rem;">✕</button>
-  </div>
-  <div id="cart-items"><div style="color:#888;text-align:center;margin-top:30px;">Panier vide.</div></div>
-  <div class="cart-foot">
-    <div style="display:flex;justify-content:space-between;margin-bottom:10px;font-weight:700;"><span>Total</span><span id="cart-total-amount" style="color:var(--gold-light)">0 $</span></div>
-    <button id="checkout-btn" disabled onclick="confirmOrder()">Confirmer la commande</button>
+    <div class="comments-list" id="comments-list"></div>
   </div>
 </div>
 
 <script>
+  // Catégories mises à jour avec "Restaurants"
   const CATEGORIES = [
-    { id: "nourriture", name: "Nourriture", emoji: "🍲" },
-    { id: "boutique", name: "Boutique", emoji: "🛍️" },
+    { id: "restaurants", name: "Restaurants", emoji: "🍲" },
+    { id: "boutiques", name: "Boutiques", emoji: "🛍️" },
     { id: "electronique", name: "Électronique", emoji: "📲" },
     { id: "beaute", name: "Beauté", emoji: "💄" },
   ];
 
-  const SHOPS = [
-    { id: 1, category: "boutique", name: "Boutique Bila", logo: "🏬", products: [{ id: 101, name: "Article 1", price: 5, emoji: "👗" }] },
-    { id: 2, category: "nourriture", name: "Nom du resto", logo: "🍽️", products: [{ id: 201, name: "Plat du jour", price: 2, emoji: "🍛" }] },
-  ];
-
   let activeCategory = CATEGORIES[0].id;
-  let activeShopId = null;
-  let cart = {};
 
   function renderCategories(){
     document.getElementById('cat-grid').innerHTML = CATEGORIES.map(c => `
@@ -293,75 +221,27 @@ footer{padding:20px 5vw 90px;text-align:center;color:#C8C1AE;font-size:.8rem;}
 
   function selectCategory(catId){
     activeCategory = catId;
-    closeShopPanel();
     renderCategories();
-    renderShops();
   }
 
-  function renderShops(){
-    const shopsInCat = SHOPS.filter(s => s.category === activeCategory);
-    let html = shopsInCat.map(s => `
-      <div class="shop-card" onclick="openShop(${s.id})">
-        <div class="shop-logo">${s.logo}</div>
-        <div class="shop-name">${s.name}</div>
-        <div class="shop-sub">${s.products.length} article(s)</div>
-      </div>
-    `).join('');
-    document.getElementById('shops-grid').innerHTML = html;
+  function toggleVendorCategory() {
+    const role = document.getElementById('auth-role').value;
+    const catGroup = document.getElementById('vendor-cat-group');
+    catGroup.style.display = (role === 'vendeur') ? 'block' : 'none';
   }
-
-  function openShop(shopId){
-    activeShopId = shopId;
-    const shop = SHOPS.find(s => s.id === shopId);
-    document.getElementById('shop-panel-title').textContent = shop.name;
-    document.getElementById('shop-products').innerHTML = shop.products.map(p => `
-      <div class="product-card">
-        <div class="product-emoji">${p.emoji}</div>
-        <h4>${p.name}</h4>
-        <div class="product-price">${p.price} $</div>
-        <button class="add-btn" onclick="addToCart(${p.id})">Ajouter</button>
-      </div>
-    `).join('');
-    document.getElementById('shop-panel').classList.add('open');
-  }
-
-  function closeShopPanel(){ document.getElementById('shop-panel').classList.remove('open'); }
 
   function openAuthModal(){ document.getElementById('auth-modal').classList.add('open'); }
   function closeAuthModal(){ document.getElementById('auth-modal').classList.remove('open'); }
   function openCommentsModal(){ document.getElementById('comments-modal').classList.add('open'); }
   function closeCommentsModal(){ document.getElementById('comments-modal').classList.remove('open'); }
 
-  function openVendorChat(){
-    alert("Ouverture du tchat privé avec le vendeur de la boutique...");
-  }
-
-  function addToCart(pId){
-    cart[pId] = (cart[pId] || 0) + 1;
-    renderCart();
-    toggleCart(true);
-  }
-
-  function renderCart(){
-    const ids = Object.keys(cart);
-    const count = ids.reduce((sum, id) => sum + cart[id], 0);
-    document.getElementById('cart-count').textContent = count;
-    document.getElementById('checkout-btn').disabled = count === 0;
-  }
-
-  function toggleCart(open){
-    document.getElementById('cart-drawer').classList.toggle('open', open);
-    document.getElementById('cart-overlay').classList.toggle('open', open);
-  }
-
   renderCategories();
-  renderShops();
 </script>
 
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-app.js";
   import { getFirestore, collection, addDoc, query, orderBy, serverTimestamp, onSnapshot, doc, setDoc } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-firestore.js";
-  import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-auth.js";
+  import { getAuth, createUserWithEmailAndPassword, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-auth.js";
 
   const firebaseConfig = {
     apiKey: "AIzaSyCmzbxSA6sKCbIKVL1vw3zLk1cP_zqs_ns",
@@ -376,82 +256,66 @@ footer{padding:20px 5vw 90px;text-align:center;color:#C8C1AE;font-size:.8rem;}
   const db = getFirestore(app);
   const auth = getAuth(app);
 
-  window.db = db;
-  window.addDoc = addDoc;
-  window.collection = collection;
-  window.serverTimestamp = serverTimestamp;
-
-  // Publication des commentaires publics
-  window.postComment = async function() {
-    const name = document.getElementById('comment-name').value.trim();
-    const text = document.getElementById('comment-text').value.trim();
-    if(!name || !text) return alert("Remplis ton nom et message");
-
-    try {
-      await addDoc(collection(db, "comments"), {
-        author: name,
-        text: text,
-        createdAt: serverTimestamp()
-      });
-      document.getElementById('comment-text').value = "";
-    } catch(e) { console.error("Erreur:", e); }
-  };
-
-  // Synchronisation Commentaires en temps réel
-  function listenToComments() {
-    const listEl = document.getElementById('comments-list');
-    const q = query(collection(db, "comments"), orderBy("createdAt", "desc"));
-    onSnapshot(q, (snapshot) => {
-      if (snapshot.empty) {
-        listEl.innerHTML = '<div style="color:#888;font-size:.8rem;">Aucun avis pour le moment.</div>';
-        return;
-      }
-      let html = '';
-      snapshot.forEach((doc) => {
-        const data = doc.data();
-        const dateStr = data.createdAt ? new Date(data.createdAt.seconds * 1000).toLocaleDateString("fr-FR") : "À l'instant";
-        html += `
-          <div class="comment-card">
-            <div class="comment-header">
-              <span class="comment-author">${data.author || 'Anonyme'}</span>
-              <span class="comment-date">${dateStr}</span>
-            </div>
-            <div class="comment-body">${data.text}</div>
-          </div>
-        `;
-      });
-      listEl.innerHTML = html;
-    });
-  }
-
-  // Inscription utilisateur / vendeur
+  // Inscription Utilisateur / Vendeur
   window.handleSignUp = async function() {
     const role = document.getElementById('auth-role').value;
+    const vendorCat = document.getElementById('auth-vendor-cat').value;
     const name = document.getElementById('auth-name').value.trim();
     const email = document.getElementById('auth-email').value.trim();
     const password = document.getElementById('auth-password').value;
 
-    if(!name || !email || !password) return alert("Merci de remplir tous les champs");
+    if(!name || !email || !password) return alert("Veuillez remplir tous les champs.");
 
     try {
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
 
-      // Sauvegarde du rôle dans Firestore
+      // Enregistrement des données dans Firestore
       await setDoc(doc(db, "users", user.uid), {
         uid: user.uid,
         name: name,
         email: email,
         role: role,
+        vendorCategory: role === 'vendeur' ? vendorCat : null,
         createdAt: serverTimestamp()
       });
 
-      alert(`Compte ${role.toUpperCase()} créé avec succès !`);
+      alert(`Compte ${role === 'vendeur' ? 'Vendeur' : 'Acheteur'} créé avec succès !`);
       window.closeAuthModal();
     } catch(error) {
       alert("Erreur lors de l'inscription : " + error.message);
     }
   };
+
+  // Suivi de l'état de connexion
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      document.getElementById('auth-btn').textContent = "👤 Mon Profil";
+    }
+  });
+
+  // Gestion des commentaires
+  window.postComment = async function() {
+    const name = document.getElementById('comment-name').value.trim();
+    const text = document.getElementById('comment-text').value.trim();
+    if(!name || !text) return alert("Remplissez votre nom et message.");
+
+    await addDoc(collection(db, "comments"), { author: name, text: text, createdAt: serverTimestamp() });
+    document.getElementById('comment-text').value = "";
+  };
+
+  function listenToComments() {
+    const listEl = document.getElementById('comments-list');
+    const q = query(collection(db, "comments"), orderBy("createdAt", "desc"));
+    onSnapshot(q, (snapshot) => {
+      let html = '';
+      snapshot.forEach((doc) => {
+        const data = doc.data();
+        html += `<div class="comment-card"><div class="comment-author">${data.author}</div><div class="comment-body">${data.text}</div></div>`;
+      });
+      listEl.innerHTML = html || '<div style="color:#888;font-size:.8rem;">Aucun commentaire.</div>';
+    });
+  }
 
   listenToComments();
 </script>
