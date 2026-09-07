@@ -530,7 +530,72 @@ section{padding:24px 5vw;background:rgba(0,0,0,.35);border-bottom:1px solid #2A2
       listEl.innerHTML = html || '<div style="color:#888;font-size:.8rem;">Aucun avis pour le moment.</div>';
     });
   }
+import { getAuth, createUserWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
+const auth = getAuth();
+const db = getFirestore();
+
+// 1. GESTION DE L'INSCRIPTION PAR EMAIL
+async function inscrireUtilisateur(email, password, nom, role) {
+  try {
+    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+    const user = userCredential.user;
+
+    // Enregistrement dans Firestore (rôle + profil)
+    await setDoc(doc(db, "users", user.uid), {
+      nom: nom,
+      email: email,
+      role: role, // "acheteur" ou "vendeur"
+      createdAt: new Date()
+    });
+
+    // Redirection directe sans message d'erreur !
+    redirigerApresInscription(role);
+
+  } catch (error) {
+    // Si l'e-mail existe déjà, on informe gentiment au lieu de bloquer
+    if (error.code === 'auth/email-already-in-use') {
+      alert("Ce compte existe déjà ! Redirection vers la connexion...");
+      // Ici tu peux ouvrir ton formulaire de connexion
+    } else {
+      alert("Erreur lors de l'inscription : " + error.message);
+    }
+  }
+}
+
+// 2. INSCRIPTION / CONNEXION DIRECTE AVEC GOOGLE
+const provider = new GoogleAuthProvider();
+
+async function connexionGoogle(roleChoisi) {
+  try {
+    const result = await signInWithPopup(auth, provider);
+    const user = result.user;
+
+    // Sauvegarde du rôle dans Firestore
+    await setDoc(doc(db, "users", user.uid), {
+      nom: user.displayName,
+      email: user.email,
+      role: roleChoisi,
+      createdAt: new Date()
+    }, { merge: true });
+
+    redirigerApresInscription(roleChoisi);
+  } catch (error) {
+    alert("Erreur de connexion Google : " + error.message);
+  }
+}
+
+// 3. REDIRECTION AUTOMATIQUE
+function redirigerApresInscription(role) {
+  if (role === 'vendeur') {
+    alert("Bienvenue Vendeur ! Vous allez créer votre boutique.");
+    // Rediriger vers la page de création de boutique
+  } else {
+    alert("Bienvenue sur JOYFULL !");
+    // Rediriger vers l'accueil du site
+  }
+}
   listenToComments();
 </script>
 </body>
