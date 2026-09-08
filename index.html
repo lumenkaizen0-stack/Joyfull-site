@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>JOYFULL - Marketplace Lubumbashi</title>
+  <title>JOYFULL - Lubumbashi</title>
   <style>
-    /* --- CSS DESIGN PREMIUM JOYFULL --- */
+    /* --- DESIGN EXACT DE TON INTERFACE D'ORIGINE --- */
     * {
       box-sizing: border-box;
       margin: 0;
@@ -13,348 +13,312 @@
     }
 
     body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-      background-color: #0b0b0b;
-      color: #e5e5e5;
+      background-color: #080808;
+      color: #ffffff;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
       min-height: 100vh;
       display: flex;
       flex-direction: column;
     }
 
-    /* En-tête / Header */
+    /* En-tête centré comme ton image */
     header {
-      background-color: #121212;
-      border-bottom: 1px solid #2a2a2a;
-      padding: 15px 20px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 15px;
-      position: sticky;
-      top: 0;
-      z-index: 1000;
+      padding: 25px 15px 15px 15px;
+      text-align: center;
+      background-color: #080808;
     }
 
-    @media (min-width: 768px) {
-      header {
-        flex-direction: row;
-        justify-content: space-between;
-      }
-    }
-
-    .logo {
-      font-size: 1.8rem;
+    .brand-title {
+      font-size: 2.2rem;
       font-weight: 900;
       color: #d4af37;
-      letter-spacing: 3px;
+      letter-spacing: 4px;
+      margin-bottom: 20px;
       text-transform: uppercase;
     }
 
+    /* Menu avec les boutons en forme de pilules */
     nav {
       display: flex;
-      flex-wrap: wrap;
       justify-content: center;
-      gap: 12px;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 12px;
     }
 
-    nav a {
-      color: #b0b0b0;
-      text-decoration: none;
-      font-size: 0.95rem;
+    .nav-pill {
+      background: transparent;
+      color: #ffffff;
+      border: none;
+      padding: 10px 22px;
+      border-radius: 25px;
+      font-size: 1rem;
       font-weight: 600;
-      padding: 8px 14px;
-      border-radius: 20px;
-      transition: all 0.3s ease;
       cursor: pointer;
+      text-decoration: none;
+      transition: all 0.2s ease;
     }
 
-    nav a:hover, nav a.active {
-      color: #000000;
+    .nav-pill.active {
       background-color: #d4af37;
+      color: #000000;
     }
 
-    nav a.btn-nav-auth {
+    /* Bouton Connexion encadré centré dessous */
+    .nav-auth-container {
+      display: flex;
+      justify-content: center;
+      margin-top: 5px;
+    }
+
+    .btn-outline-gold {
+      background: transparent;
       border: 1px solid #d4af37;
       color: #d4af37;
+      padding: 8px 28px;
+      border-radius: 25px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
     }
 
-    nav a.btn-nav-auth:hover {
+    .btn-outline-gold:hover {
       background-color: #d4af37;
       color: #000;
     }
 
-    /* Vues de Pages Plein Écran */
+    /* --- VUES PLEIN ÉCRAN --- */
     main {
       flex: 1;
       width: 100%;
     }
 
-    .page-view {
+    .page-section {
       display: none;
       width: 100%;
-      min-height: calc(100vh - 80px);
-      padding: 40px 20px;
-      max-width: 1100px;
+      min-height: 70vh;
+      padding: 30px 20px;
+      max-width: 800px;
       margin: 0 auto;
-      animation: fadeInPage 0.3s ease-in-out;
     }
 
-    .page-view.active {
+    .page-section.active {
       display: block;
     }
 
-    @keyframes fadeInPage {
-      from { opacity: 0; transform: translateY(8px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    h1.page-title {
-      font-size: 2rem;
+    .main-heading {
+      font-size: 2.2rem;
+      font-weight: 800;
       color: #d4af37;
-      margin-bottom: 10px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
+      line-height: 1.2;
+      margin-bottom: 15px;
     }
 
-    p.page-subtitle {
+    .sub-heading {
       color: #a0a0a0;
+      font-size: 1.05rem;
+      line-height: 1.5;
       margin-bottom: 30px;
-      font-size: 1rem;
     }
 
-    /* Formulaires & Champs */
+    /* Inputs et Formulaires */
     input, select, textarea {
       width: 100%;
       padding: 14px;
       margin-bottom: 12px;
-      background-color: #181818;
-      border: 1px solid #333;
+      background-color: #141414;
+      border: 1px solid #2a2a2a;
       color: #fff;
       border-radius: 8px;
       font-size: 1rem;
       outline: none;
-      transition: border-color 0.3s;
     }
 
-    input:focus, select:focus, textarea:focus {
+    input:focus, textarea:focus {
       border-color: #d4af37;
     }
 
-    .btn-gold {
+    .btn-submit {
       background-color: #d4af37;
-      color: #000000;
+      color: #000;
       border: none;
-      padding: 14px 24px;
+      padding: 14px 28px;
       font-weight: 700;
-      font-size: 1rem;
       border-radius: 8px;
       cursor: pointer;
-      transition: transform 0.2s, background-color 0.2s;
+      font-size: 1rem;
     }
 
-    .btn-gold:hover {
-      background-color: #e5c158;
-      transform: translateY(-2px);
-    }
-
-    /* Fenêtre Modale Connexion */
+    /* Modale d'inscription au centre */
     .modal-overlay {
       position: fixed;
       top: 0; left: 0; width: 100%; height: 100%;
-      background: rgba(0, 0, 0, 0.85);
+      background: rgba(0, 0, 0, 0.88);
       display: flex; justify-content: center; align-items: center;
       z-index: 10000;
-      backdrop-filter: blur(6px);
+      backdrop-filter: blur(5px);
     }
 
-    .modal-card {
-      background: #141414;
+    .modal-box {
+      background: #121212;
       border: 1px solid #d4af37;
-      padding: 30px 25px;
-      border-radius: 14px;
+      padding: 30px 20px;
+      border-radius: 12px;
       width: 90%;
-      max-width: 420px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+      max-width: 400px;
       position: relative;
     }
 
-    .close-modal {
+    .close-btn {
       position: absolute;
-      top: 15px; right: 20px;
+      top: 12px; right: 16px;
       background: none; border: none;
-      color: #888; font-size: 24px; cursor: pointer;
+      color: #fff; font-size: 22px; cursor: pointer;
     }
 
-    .role-options {
-      display: flex;
-      gap: 15px;
-      margin: 15px 0 20px 0;
-      background: #1f1f1f;
-      padding: 8px;
-      border-radius: 8px;
+    .role-selector {
+      display: flex; gap: 10px; margin: 15px 0;
+      background: #1c1c1c; padding: 5px; border-radius: 8px;
     }
 
-    .role-options label {
-      flex: 1;
-      text-align: center;
-      padding: 8px;
-      cursor: pointer;
-      font-size: 0.9rem;
-      color: #aaa;
+    .role-selector label {
+      flex: 1; text-align: center; padding: 8px; cursor: pointer;
+      color: #aaa; border-radius: 6px; font-size: 0.9rem;
     }
 
-    .role-options input[type="radio"] {
-      display: none;
+    .role-selector input { display: none; }
+    .role-selector label:has(input:checked) {
+      background: #d4af37; color: #000; font-weight: bold;
     }
 
-    .role-options label:has(input:checked) {
-      background: #d4af37;
-      color: #000;
-      font-weight: bold;
+    /* Cartes */
+    .item-card {
+      background: #121212;
+      border-left: 3px solid #d4af37;
+      padding: 15px;
       border-radius: 6px;
+      margin-bottom: 12px;
     }
 
-    /* Cartes Avis & Cartes Boutiques */
-    .card-item {
-      background-color: #151515;
-      border-left: 4px solid #d4af37;
-      border-radius: 8px;
-      padding: 16px 20px;
-      margin-bottom: 15px;
-    }
-
-    .card-item .author {
-      font-weight: bold;
-      color: #d4af37;
-      font-size: 1.05rem;
-      margin-bottom: 6px;
-    }
-
-    .card-item .text {
-      color: #d1d1d1;
-      line-height: 1.5;
-    }
+    .item-card .title { font-weight: bold; color: #d4af37; margin-bottom: 4px; }
+    .item-card .desc { color: #ccc; font-size: 0.95rem; }
 
     footer {
-      background: #121212;
-      border-top: 1px solid #222;
-      padding: 40px 20px;
+      background: #0d0d0d;
+      border-top: 1px solid #1a1a1a;
+      padding: 30px 20px;
       margin-top: auto;
-    }
-
-    .footer-container {
-      max-width: 800px;
-      margin: 0 auto;
     }
   </style>
 </head>
 <body>
 
-  <!-- EN-TÊTE ET NAVIGATION -->
+  <!-- EN-TÊTE EXACT AVEC TON DESIGN -->
   <header>
-    <div class="logo">JOYFULL</div>
+    <div class="brand-title">JOYFULL</div>
     <nav>
-      <a id="navAccueil" class="active" onclick="navigationPage('accueilPage')">Accueil</a>
-      <a id="navBoutiques" onclick="navigationPage('boutiquesPage')">Boutiques</a>
-      <a id="navAvis" onclick="navigationPage('avisReadPage')">Avis</a>
-      <a id="btnAuthNav" class="btn-nav-auth" onclick="ouvrirAuthModal()">Connexion</a>
+      <button id="btnNavAccueil" class="nav-pill active" onclick="basculerPage('accueilPage')">Accueil</button>
+      <button id="btnNavBoutiques" class="nav-pill" onclick="basculerPage('boutiquesPage')">Boutiques</button>
+      <button id="btnNavAvis" class="nav-pill" onclick="basculerPage('avisReadPage')">Avis</button>
     </nav>
+    <div class="nav-auth-container">
+      <button id="btnAuth" class="btn-outline-gold" onclick="ouvrirAuthModal()">Connexion</button>
+    </div>
   </header>
 
-  <!-- CONTENU PRINCIPAL PAR PAGES PLEIN ÉCRAN -->
   <main>
-
     <!-- PAGE 1 : ACCUEIL -->
-    <section id="accueilPage" class="page-view active">
-      <h1 class="page-title">Bienvenue sur JOYFULL 🛍️</h1>
-      <p class="page-subtitle">La plateforme référence pour les boutiques, restaurants et vendeurs de Lubumbashi.</p>
+    <section id="accueilPage" class="page-section active">
+      <h1 class="main-heading">Bienvenue sur<br>JOYFULL 🛍️🛍️</h1>
+      <p class="sub-heading">La plateforme référence pour les boutiques, restaurants et vendeurs de Lubumbashi.</p>
 
-      <!-- TABLEAU DE BORD VENDEUR -->
-      <div id="vendeurDashboard" style="display: none; background: #161616; border: 1px solid #d4af37; padding: 25px; border-radius: 12px; margin-top: 20px;">
-        <h2 style="color: #d4af37; margin-bottom: 10px;">🏪 Espace Gestion Vendeur</h2>
-        <p style="color: #aaa; margin-bottom: 15px;">Gérez les paramètres et les articles de votre boutique.</p>
-        <button class="btn-gold" onclick="toggleFormBoutique()">⚙️ Configurer ma Boutique</button>
+      <!-- ESPACE GESTION VENDEUR -->
+      <div id="vendeurDashboard" style="display: none; background: #121212; border: 1px solid #d4af37; padding: 20px; border-radius: 10px; margin-top: 20px;">
+        <h2 style="color: #d4af37; margin-bottom: 10px;">🏪 Espace Vendeur</h2>
+        <button class="btn-submit" onclick="toggleFormBoutique()">⚙️ Configurer ma Boutique</button>
 
-        <div id="formBoutique" style="display: none; margin-top: 20px;">
-          <input type="text" id="shopName" placeholder="Nom de la boutique">
+        <div id="formBoutique" style="display: none; margin-top: 15px;">
+          <input type="text" id="shopName" placeholder="Nom de votre boutique">
           <select id="shopCategory">
             <option value="Mode">Mode & Vêtements</option>
             <option value="Electronique">Électronique & Tech</option>
             <option value="Restauration">Restaurants & Snacks</option>
             <option value="Accessoires">Accessoires</option>
           </select>
-          <textarea id="shopDesc" placeholder="Description de votre boutique..." rows="4"></textarea>
-          <button class="btn-gold" onclick="sauvegarderBoutique()">Enregistrer ma boutique</button>
+          <textarea id="shopDesc" placeholder="Description de la boutique..." rows="3"></textarea>
+          <button class="btn-submit" onclick="sauvegarderBoutique()">Enregistrer ma boutique</button>
         </div>
       </div>
     </section>
 
-    <!-- PAGE 2 : BOUTIQUES (S'AFFICHE EN PLEIN ÉCRAN COMME UNE NOUVELLE PAGE) -->
-    <section id="boutiquesPage" class="page-view">
-      <h1 class="page-title">🏪 Boutiques Partenaires</h1>
-      <p class="page-subtitle">Parcourez tous les commerces enregistrés à Lubumbashi.</p>
+    <!-- PAGE 2 : BOUTIQUES (PLEIN ÉCRAN) -->
+    <section id="boutiquesPage" class="page-section">
+      <h1 class="main-heading">🏪 Boutiques Partenaires</h1>
+      <p class="sub-heading">Découvrez les commerces officiels enregistrés à Lubumbashi.</p>
+      
+      <!-- Barre de recherche créative -->
+      <input type="text" id="searchShop" placeholder="🔍 Rechercher une boutique ou un quartier..." style="margin-bottom: 20px;">
 
       <div id="listeBoutiques">
-        <p style="color: #666;">Aucune boutique disponible pour l'instant.</p>
+        <p style="color: #666;">Chargement des boutiques...</p>
       </div>
     </section>
 
     <!-- PAGE 3 : AVIS DE LA COMMUNAUTÉ -->
-    <section id="avisReadPage" class="page-view">
-      <h1 class="page-title">💬 Avis de la Communauté</h1>
-      <p class="page-subtitle">Lisez ce que les clients et acheteurs disent de JOYFULL.</p>
+    <section id="avisReadPage" class="page-section">
+      <h1 class="main-heading">💬 Ce que pense la communauté</h1>
+      <p class="sub-heading">Consultez les retours des utilisateurs de JOYFULL.</p>
 
       <div id="listeAvisPublics">
-        <!-- Rempli en JS -->
+        <!-- Rempli dynamiquement -->
       </div>
     </section>
-
   </main>
 
-  <!-- BAS DE PAGE : SECTION POUR ÉCRIRE UN AVIS -->
+  <!-- BAS DE PAGE : ÉCRIRE UN AVIS -->
   <footer>
-    <div class="footer-container">
-      <h3 style="color: #d4af37; margin-bottom: 8px;">✍️ Publier un avis public</h3>
-      <p style="color: #888; font-size: 0.9rem; margin-bottom: 15px;">Seuls les membres connectés peuvent laisser un message.</p>
-      
-      <textarea id="avisTexte" placeholder="Partagez votre avis sur l'application..." rows="3"></textarea>
-      <button class="btn-gold" onclick="publierAvis()">Publier l'avis</button>
+    <div style="max-width: 800px; margin: 0 auto;">
+      <h3 style="color: #d4af37; margin-bottom: 8px;">✍️ Laisser un avis sur JOYFULL</h3>
+      <p style="color: #888; font-size: 0.85rem; margin-bottom: 12px;">Seuls les utilisateurs connectés peuvent publier un avis.</p>
+      <textarea id="avisTexte" placeholder="Partagez votre expérience sur JOYFULL..." rows="3"></textarea>
+      <button class="btn-submit" onclick="publierAvis()">Publier mon avis</button>
     </div>
   </footer>
 
-  <!-- MODALE D'AUTHENTIFICATION -->
+  <!-- MODALE D'INSCRIPTION / CONNEXION CENTRÉE -->
   <div id="authModal" class="modal-overlay" style="display: none;">
-    <div class="modal-card">
-      <button class="close-modal" onclick="fermerAuthModal()">&times;</button>
-      <h2 style="color: #d4af37; text-align: center; margin-bottom: 15px;">Rejoindre JOYFULL</h2>
+    <div class="modal-box">
+      <button class="close-btn" onclick="fermerAuthModal()">&times;</button>
+      <h2 style="color: #d4af37; text-align: center;">Rejoindre JOYFULL</h2>
 
-      <div class="role-options">
+      <div class="role-selector">
         <label><input type="radio" name="userRole" value="acheteur" checked> Acheteur</label>
         <label><input type="radio" name="userRole" value="vendeur"> Vendeur</label>
       </div>
 
-      <input type="text" id="authName" placeholder="Votre nom complet ou nom commercial">
+      <input type="text" id="authName" placeholder="Nom complet ou nom de boutique">
       <input type="email" id="authEmail" placeholder="Adresse e-mail">
       <input type="password" id="authPassword" placeholder="Mot de passe">
 
-      <button class="btn-gold" onclick="traiterInscription()" style="width:100%; margin-top: 10px;">Créer mon compte</button>
+      <button class="btn-submit" onclick="traiterInscription()" style="width: 100%; margin-top: 5px;">Créer mon compte</button>
       
-      <button onclick="traiterConnexionGoogle()" style="width:100%; padding: 12px; background: #fff; color: #000; border: none; border-radius: 8px; font-weight: bold; margin-top: 10px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px;">
+      <button onclick="traiterConnexionGoogle()" style="width: 100%; padding: 12px; background: #fff; color: #000; border: none; border-radius: 8px; font-weight: bold; margin-top: 10px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px;">
         <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" width="18" alt="G">
         Continuer avec Google
       </button>
     </div>
   </div>
 
-  <!-- JAVASCRIPT & FIREBASE -->
+  <!-- FIREBASE & LOGIQUE -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
     import { getAuth, createUserWithEmailAndPassword, signInWithPopup, GoogleAuthProvider, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
     import { getFirestore, doc, setDoc, getDoc, collection, addDoc, onSnapshot, query, orderBy } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
     const firebaseConfig = {
-      apiKey: "AIzaSy...", // Remplace par ta clé si besoin
+      apiKey: "AIzaSy...",
       authDomain: "joyfull-a1fba.firebaseapp.com",
       projectId: "joyfull-a1fba",
       storageBucket: "joyfull-a1fba.appspot.com",
@@ -368,33 +332,33 @@
 
     let utilisateurActuel = null;
 
-    // --- NAVIGATION PAGE EN PLEIN ÉCRAN ---
-    window.navigationPage = function(pageId) {
-      document.querySelectorAll('.page-view').forEach(view => view.classList.remove('active'));
-      document.querySelectorAll('nav a').forEach(a => a.classList.remove('active'));
+    // --- NAVIGATION PLEIN ÉCRAN ---
+    window.basculerPage = function(pageId) {
+      document.querySelectorAll('.page-section').forEach(p => p.classList.remove('active'));
+      document.querySelectorAll('.nav-pill').forEach(b => b.classList.remove('active'));
 
       document.getElementById(pageId).classList.add('active');
 
-      if (pageId === 'accueilPage') document.getElementById('navAccueil').classList.add('active');
-      if (pageId === 'boutiquesPage') document.getElementById('navBoutiques').classList.add('active');
-      if (pageId === 'avisReadPage') document.getElementById('navAvis').classList.add('active');
-      
+      if(pageId === 'accueilPage') document.getElementById('btnNavAccueil').classList.add('active');
+      if(pageId === 'boutiquesPage') document.getElementById('btnNavBoutiques').classList.add('active');
+      if(pageId === 'avisReadPage') document.getElementById('btnNavAvis').classList.add('active');
+
       window.scrollTo(0, 0);
     };
 
-    // --- DETECTION CONNEXION ---
+    // --- SURVEILLANCE CONNEXION ---
     onAuthStateChanged(auth, async (user) => {
       if (user) {
         utilisateurActuel = user;
-        document.getElementById("btnAuthNav").innerText = "Mon Compte";
+        document.getElementById("btnAuth").innerText = "Mon Compte";
         
-        const userDoc = await getDoc(doc(db, "users", user.uid));
-        if (userDoc.exists() && userDoc.data().role === "vendeur") {
+        const uDoc = await getDoc(doc(db, "users", user.uid));
+        if (uDoc.exists() && uDoc.data().role === "vendeur") {
           document.getElementById("vendeurDashboard").style.display = "block";
         }
       } else {
         utilisateurActuel = null;
-        document.getElementById("btnAuthNav").innerText = "Connexion";
+        document.getElementById("btnAuth").innerText = "Connexion";
         document.getElementById("vendeurDashboard").style.display = "none";
       }
     });
@@ -409,101 +373,92 @@
       if (!email || !password || !nom) return alert("Veuillez remplir tous les champs !");
 
       try {
-        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-        await setDoc(doc(db, "users", userCredential.user.uid), {
-          uid: userCredential.user.uid, nom: nom, email: email, role: role, createdAt: new Date()
+        const res = await createUserWithEmailAndPassword(auth, email, password);
+        await setDoc(doc(db, "users", res.user.uid), {
+          uid: res.user.uid, nom: nom, email: email, role: role, createdAt: new Date()
         });
-
         fermerAuthModal();
         alert("Compte créé avec succès !");
-      } catch (error) {
-        alert("Erreur : " + error.message);
-      }
+      } catch (e) { alert("Erreur : " + e.message); }
     };
 
     const provider = new GoogleAuthProvider();
     window.traiterConnexionGoogle = async function() {
       const role = document.querySelector('input[name="userRole"]:checked').value;
       try {
-        const result = await signInWithPopup(auth, provider);
-        await setDoc(doc(db, "users", result.user.uid), {
-          uid: result.user.uid, nom: result.user.displayName, email: result.user.email, role: role, createdAt: new Date()
+        const res = await signInWithPopup(auth, provider);
+        await setDoc(doc(db, "users", res.user.uid), {
+          uid: res.user.uid, nom: res.user.displayName, email: res.user.email, role: role, createdAt: new Date()
         }, { merge: true });
-
         fermerAuthModal();
         alert("Connexion Google réussie !");
-      } catch (error) {
-        alert("Erreur : " + error.message);
-      }
+      } catch (e) { alert("Erreur : " + e.message); }
     };
 
-    // --- GESTION DES AVIS ---
+    // --- PUBLICATION AVIS (LIÉ AU NOM DE PROFIL) ---
     window.publierAvis = async function() {
       if (!utilisateurActuel) {
-        alert("Connectez-vous pour laisser un avis !");
+        alert("Veuillez vous connecter pour publier un avis !");
         ouvrirAuthModal();
         return;
       }
 
-      const texte = document.getElementById("avisTexte").value;
-      if (!texte.trim()) return alert("Veuillez entrer un message.");
+      const txt = document.getElementById("avisTexte").value;
+      if (!txt.trim()) return alert("Écrivez un message !");
 
       await addDoc(collection(db, "comments"), {
         userId: utilisateurActuel.uid,
-        message: texte,
+        message: txt,
         date: new Date()
       });
 
       document.getElementById("avisTexte").value = "";
-      alert("Avis publié !");
+      alert("Avis publié avec succès !");
     };
 
-    // Charger les avis en lisant le nom mis à jour du profil
+    // Charger les avis
     onSnapshot(query(collection(db, "comments"), orderBy("date", "desc")), (snapshot) => {
-      const container = document.getElementById("listeAvisPublics");
-      container.innerHTML = "";
+      const box = document.getElementById("listeAvisPublics");
+      box.innerHTML = "";
 
       if (snapshot.empty) {
-        container.innerHTML = "<p style='color: #666;'>Aucun avis pour le moment.</p>";
+        box.innerHTML = "<p style='color:#666;'>Aucun avis pour le moment.</p>";
         return;
       }
 
-      snapshot.forEach(async (docSnapshot) => {
-        const avis = docSnapshot.data();
-        let nomAuteur = "Utilisateur JOYFULL";
+      snapshot.forEach(async (docSnap) => {
+        const avis = docSnap.data();
+        let auteur = "Utilisateur JOYFULL";
 
         if (avis.userId) {
           const uDoc = await getDoc(doc(db, "users", avis.userId));
-          if (uDoc.exists() && uDoc.data().nom) nomAuteur = uDoc.data().nom;
+          if (uDoc.exists() && uDoc.data().nom) auteur = uDoc.data().nom;
         }
 
         const div = document.createElement("div");
-        div.className = "card-item";
-        div.innerHTML = `
-          <div class="author">${nomAuteur}</div>
-          <div class="text">${avis.message}</div>
-        `;
-        container.appendChild(div);
+        div.className = "item-card";
+        div.innerHTML = `<div class="title">${auteur}</div><div class="desc">${avis.message}</div>`;
+        box.appendChild(div);
       });
     });
 
-    // --- BOUTIQUE VENDEUR ---
+    // --- SAUVEGARDER BOUTIQUE VENDEUR ---
     window.sauvegarderBoutique = async function() {
       if (!utilisateurActuel) return;
       const nom = document.getElementById("shopName").value;
       const cat = document.getElementById("shopCategory").value;
       const desc = document.getElementById("shopDesc").value;
 
-      if (!nom) return alert("Veuillez entrer un nom.");
+      if (!nom) return alert("Entrez le nom de votre boutique.");
 
       await setDoc(doc(db, "shops", utilisateurActuel.uid), {
         vendeurId: utilisateurActuel.uid, nomBoutique: nom, categorie: cat, description: desc, createdAt: new Date()
       });
 
-      alert("Boutique enregistrée !");
+      alert("Boutique configurée avec succès !");
     };
 
-    // Modal & Toggles
+    // Fonctions Modale
     window.ouvrirAuthModal = () => document.getElementById("authModal").style.display = "flex";
     window.fermerAuthModal = () => document.getElementById("authModal").style.display = "none";
     window.toggleFormBoutique = () => {
