@@ -5,7 +5,66 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>JOYFULL — Ventes & achats Lubumbashi</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">/* Animation et Centrage de la Fenêtre Modale d'inscription */
+.modal-overlay {
+  position: fixed;
+  top: 0; left: 0; width: 100%; height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  display: flex; justify-content: center; align-items: center;
+  z-index: 10000;
+  backdrop-filter: blur(5px);
+}
+
+.modal-content {
+  background: #121212;
+  border: 1px solid #d4af37;
+  padding: 30px;
+  border-radius: 12px;
+  width: 90%; max-width: 400px;
+  text-align: center;
+  color: #fff;
+  box-shadow: 0 0 20px rgba(212, 175, 55, 0.3);
+  animation: popIn 0.3s ease-out;
+}
+
+@keyframes popIn {
+  from { transform: scale(0.8); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+.role-selector {
+  display: flex; justify-content: space-around;
+  margin: 15px 0; color: #d4af37; font-size: 0.9em;
+}
+
+.modal-content input, .modal-content textarea, select {
+  width: 100%; padding: 10px; margin: 8px 0;
+  background: #222; border: 1px solid #444; color: #fff;
+  border-radius: 6px; box-sizing: border-box;
+}
+
+.btn-primary {
+  width: 100%; padding: 12px; background: #d4af37;
+  border: none; color: #000; font-weight: bold;
+  border-radius: 6px; cursor: pointer; margin-top: 10px;
+}
+
+.btn-google {
+  width: 100%; padding: 10px; background: #fff;
+  color: #000; border: none; border-radius: 6px;
+  display: flex; align-items: center; justify-content: center;
+  gap: 10px; font-weight: bold; cursor: pointer; margin-top: 10px;
+}
+
+.btn-google img { width: 18px; height: 18px; }
+
+/* Carte d'un avis */
+.carte-avis {
+  background: #1a1a1a; border-left: 3px solid #d4af37;
+  padding: 12px; margin-bottom: 10px; border-radius: 4px;
+}
+.carte-avis .auteur { font-weight: bold; color: #d4af37; }
+.carte-avis .date { font-size: 0.8em; color: #888; }
 <style>
 :root{
   --gold:#D4AF37;
@@ -441,162 +500,234 @@ section{padding:24px 5vw;background:rgba(0,0,0,.35);border-bottom:1px solid #2A2
   renderCategories();
   renderShops();
 </script>
-
 <script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-app.js";
-  import { getFirestore, collection, addDoc, query, orderBy, serverTimestamp, onSnapshot, doc, setDoc } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-firestore.js";
-  import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-auth.js";
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+  import { getAuth, createUserWithEmailAndPassword, signInWithPopup, GoogleAuthProvider, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+  import { getFirestore, doc, setDoc, getDoc, collection, addDoc, onSnapshot, query, orderBy, updateDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
   const firebaseConfig = {
-    apiKey: "AIzaSyCmzbxSA6sKCbIKVL1vw3zLk1cP_zqs_ns",
+    apiKey: "TON_API_KEY",
     authDomain: "joyfull-a1fba.firebaseapp.com",
     projectId: "joyfull-a1fba",
-    storageBucket: "joyfull-a1fba.firebasestorage.app",
-    messagingSenderId: "1081441505666",
-    appId: "1:1081441505666:web:bf7703a0ef8b9be2d23f9b"
+    storageBucket: "joyfull-a1fba.appspot.com",
+    messagingSenderId: "...",
+    appId: "..."
   };
 
   const app = initializeApp(firebaseConfig);
-  const db = getFirestore(app);
   const auth = getAuth(app);
+  const db = getFirestore(app);
 
-  // Inscription
-  window.handleSignUp = async function() {
-    const role = document.getElementById('auth-role').value;
-    const vendorCat = document.getElementById('auth-vendor-cat').value;
-    const name = document.getElementById('auth-name').value.trim();
-    const email = document.getElementById('auth-email').value.trim();
-    const password = document.getElementById('auth-password').value;
+  let utilisateurActuel = null;
 
-    if(!name || !email || !password) return alert("Remplissez tous les champs.");
+  // --- ÉCOUTER L'ÉTAT DE CONNEXION DE L'UTILISATEUR ---
+  onAuthStateChanged(auth, async (user) => {
+    if (user) {
+      utilisateurActuel = user;
+      const userDoc = await getDoc(doc(db, "users", user.uid));
+      
+      if (userDoc.exists()) {
+        const data = userDoc.data();
+        
+        // Si c'est un vendeur, afficher le Dashboard Vendeur
+        if (data.role === "vendeur") {
+          document.getElementById("vendeurDashboard").style.display = "block";
+        }
+      }
+    } else {
+      utilisateurActuel = null;
+      document.getElementById("vendeurDashboard").style.display = "none";
+    }
+  });
+
+  // --- INSCRIPTION PAR EMAIL/MOT DE PASSE ---
+  window.traiterInscription = async function() {
+    const email = document.getElementById("authEmail").value;
+    const password = document.getElementById("authPassword").value;
+    const nom = document.getElementById("authName").value;
+    const role = document.querySelector('input[name="userRole"]:checked').value;
+
+    if (!email || !password || !nom) {
+      alert("Veuillez remplir tous les champs !");
+      return;
+    }
 
     try {
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
 
+      // Enregistrement dans Firestore avec rôle
       await setDoc(doc(db, "users", user.uid), {
         uid: user.uid,
-        name: name,
+        nom: nom,
         email: email,
         role: role,
-        vendorCategory: role === 'vendeur' ? vendorCat : null,
-        createdAt: serverTimestamp()
+        createdAt: new Date()
       });
 
-      alert(`Compte ${role.toUpperCase()} créé avec succès !`);
-      window.closeAuthModal();
-    } catch(error) {
-      alert("Erreur d'inscription : " + error.message);
+      fermerAuthModal();
+      alert("Compte créé avec succès ! Bienvenue sur JOYFULL.");
+
+    } catch (error) {
+      if (error.code === 'auth/email-already-in-use') {
+        alert("Ce compte existe déjà sur JOYFULL ! Veuillez vous connecter.");
+      } else {
+        alert("Erreur d'inscription : " + error.message);
+      }
     }
   };
 
-  // Envoi de commande lié à la BDD Admin
-  window.confirmOrder = async function() {
+  // --- INSCRIPTION / CONNEXION VIA GOOGLE ---
+  const provider = new GoogleAuthProvider();
+  window.traiterConnexionGoogle = async function() {
+    const role = document.querySelector('input[name="userRole"]:checked').value;
+
     try {
-      await addDoc(collection(db, "orders"), {
-        items: cart,
-        total: document.getElementById('cart-total-amount').textContent,
-        createdAt: serverTimestamp(),
-        status: "En attente"
-      });
-      alert("Commande confirmée et transmise à l'administration Joyfull !");
-      cart = {};
-      renderCart();
-      toggleCart(false);
-    } catch(e) {
-      alert("Erreur lors de la confirmation : " + e.message);
+      const result = await signInWithPopup(auth, provider);
+      const user = result.user;
+
+      await setDoc(doc(db, "users", user.uid), {
+        uid: user.uid,
+        nom: user.displayName,
+        email: user.email,
+        role: role,
+        createdAt: new Date()
+      }, { merge: true });
+
+      fermerAuthModal();
+      alert("Connexion Google réussie !");
+    } catch (error) {
+      alert("Erreur Google : " + error.message);
     }
   };
 
-  // Avis publics
-  window.postComment = async function() {
-    const name = document.getElementById('comment-name').value.trim();
-    const text = document.getElementById('comment-text').value.trim();
-    if(!name || !text) return alert("Remplissez votre nom et avis.");
+  // --- MISE À JOUR DU NOM (S'APPLIQUE EN TEMPS RÉEL AUX AVIS) ---
+  window.mettreAJourProfilNom = async function(nouveauNom) {
+    if (!utilisateurActuel) return;
 
-    await addDoc(collection(db, "comments"), { author: name, text: text, createdAt: serverTimestamp() });
-    document.getElementById('comment-text').value = "";
+    // 1. Mise à jour de la fiche utilisateur
+    await updateDoc(doc(db, "users", utilisateurActuel.uid), {
+      nom: nouveauNom
+    });
+    alert("Nom mis à jour avec succès ! Tous vos avis afficheront votre nouveau nom.");
   };
 
-  function listenToComments() {
-    const listEl = document.getElementById('comments-list');
-    const q = query(collection(db, "comments"), orderBy("createdAt", "desc"));
-    onSnapshot(q, (snapshot) => {
-      let html = '';
-      snapshot.forEach((doc) => {
-        const data = doc.data();
-        html += `<div class="comment-card"><div class="comment-author">${data.author}</div><div class="comment-body">${data.text}</div></div>`;
-      });
-      listEl.innerHTML = html || '<div style="color:#888;font-size:.8rem;">Aucun avis pour le moment.</div>';
-    });
-  }
-import { getAuth, createUserWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
-
-const auth = getAuth();
-const db = getFirestore();
-
-// 1. GESTION DE L'INSCRIPTION PAR EMAIL
-async function inscrireUtilisateur(email, password, nom, role) {
-  try {
-    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-    const user = userCredential.user;
-
-    // Enregistrement dans Firestore (rôle + profil)
-    await setDoc(doc(db, "users", user.uid), {
-      nom: nom,
-      email: email,
-      role: role, // "acheteur" ou "vendeur"
-      createdAt: new Date()
-    });
-
-    // Redirection directe sans message d'erreur !
-    redirigerApresInscription(role);
-
-  } catch (error) {
-    // Si l'e-mail existe déjà, on informe gentiment au lieu de bloquer
-    if (error.code === 'auth/email-already-in-use') {
-      alert("Ce compte existe déjà ! Redirection vers la connexion...");
-      // Ici tu peux ouvrir ton formulaire de connexion
-    } else {
-      alert("Erreur lors de l'inscription : " + error.message);
+  // --- SYSTÈME D'AVIS PUBLICS (RÉSERVÉ AUX INSCRITS) ---
+  window.publierAvis = async function() {
+    if (!utilisateurActuel) {
+      alert("Seuls les utilisateurs inscrits et connectés peuvent publier un avis !");
+      document.getElementById("authModal").style.display = "flex";
+      return;
     }
-  }
-}
 
-// 2. INSCRIPTION / CONNEXION DIRECTE AVEC GOOGLE
-const provider = new GoogleAuthProvider();
+    const texte = document.getElementById("avisTexte").value;
+    if (!texte) return alert("Écrivez votre message d'abord.");
 
-async function connexionGoogle(roleChoisi) {
-  try {
-    const result = await signInWithPopup(auth, provider);
-    const user = result.user;
+    // Récupérer le nom actuel de l'utilisateur
+    const userDoc = await getDoc(doc(db, "users", utilisateurActuel.uid));
+    const nomAuteur = userDoc.exists() ? userDoc.data().nom : "Utilisateur JOYFULL";
 
-    // Sauvegarde du rôle dans Firestore
-    await setDoc(doc(db, "users", user.uid), {
-      nom: user.displayName,
-      email: user.email,
-      role: roleChoisi,
+    await addDoc(collection(db, "comments"), {
+      userId: utilisateurActuel.uid,
+      message: texte,
+      date: new Date()
+    });
+
+    document.getElementById("avisTexte").value = "";
+  };
+
+  // --- CHARGEMENT DYNAMIQUE DES AVIS (LIT LE NOM DU PROFIL À JOUR) ---
+  onSnapshot(query(collection(db, "comments"), orderBy("date", "desc")), (snapshot) => {
+    const liste = document.getElementById("listeAvis");
+    liste.innerHTML = "";
+
+    snapshot.forEach(async (docSnapshot) => {
+      const avis = docSnapshot.data();
+      
+      // Aller chercher le nom du profil en direct grâce au userId
+      let nomAuteur = "Anonyme";
+      if (avis.userId) {
+        const uDoc = await getDoc(doc(db, "users", avis.userId));
+        if (uDoc.exists()) nomAuteur = uDoc.data().nom;
+      }
+
+      const div = document.createElement("div");
+      div.className = "carte-avis";
+      div.innerHTML = `
+        <div class="auteur">${nomAuteur}</div>
+        <div>${avis.message}</div>
+      `;
+      liste.appendChild(div);
+    });
+  });
+
+  // --- ESPACE VENDEUR : CRÉATION BOUTIQUE ---
+  window.sauvegarderBoutique = async function() {
+    if (!utilisateurActuel) return;
+
+    const nom = document.getElementById("shopName").value;
+    const cat = document.getElementById("shopCategory").value;
+    const desc = document.getElementById("shopDesc").value;
+
+    await setDoc(doc(db, "shops", utilisateurActuel.uid), {
+      vendeurId: utilisateurActuel.uid,
+      nomBoutique: nom,
+      categorie: cat,
+      description: desc,
+      statut: "actif",
       createdAt: new Date()
-    }, { merge: true });
+    });
 
-    redirigerApresInscription(roleChoisi);
-  } catch (error) {
-    alert("Erreur de connexion Google : " + error.message);
-  }
-}
+    alert("Votre boutique a été enregistrée avec succès !");
+  };
 
-// 3. REDIRECTION AUTOMATIQUE
-function redirigerApresInscription(role) {
-  if (role === 'vendeur') {
-    alert("Bienvenue Vendeur ! Vous allez créer votre boutique.");
-    // Rediriger vers la page de création de boutique
-  } else {
-    alert("Bienvenue sur JOYFULL !");
-    // Rediriger vers l'accueil du site
-  }
-}
-  listenToComments();
+  // Fonctions d'affichage Modale
+  window.ouvriraAuthModal = () => document.getElementById("authModal").style.display = "flex";
+  window.fermerAuthModal = () => document.getElementById("authModal").style.display = "none";
+  window.ouvrirFormulaireBoutique = () => document.getElementById("formBoutique").style.display = "block";
 </script>
+<!-- FENÊTRE D'INSCRIPTION ANIMÉE AU CENTRE -->
+<div id="authModal" class="modal-overlay" style="display: none;">
+  <div class="modal-content">
+    <button style="float:right; background:none; border:none; color:#fff; font-size:20px; cursor:pointer;" onclick="fermerAuthModal()">&times;</button>
+    <h2>Rejoindre JOYFULL</h2>
+    <div class="role-selector">
+      <label><input type="radio" name="userRole" value="acheteur" checked> 🛍️ Acheteur</label>
+      <label><input type="radio" name="userRole" value="vendeur"> 🏪 Vendeur</label>
+    </div>
+    <input type="text" id="authName" placeholder="Votre nom ou nom de boutique">
+    <input type="email" id="authEmail" placeholder="Votre adresse e-mail">
+    <input type="password" id="authPassword" placeholder="Mot de passe">
+    <button class="btn-primary" onclick="traiterInscription()">Créer mon compte</button>
+    <button class="btn-google" onclick="traiterConnexionGoogle()">
+      <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="G"> Continuer avec Google
+    </button>
+  </div>
+</div>
+
+<!-- DASHBOARD VENDEUR -->
+<section id="vendeurDashboard" style="display: none; padding: 20px; background: #1a1a1a; margin: 15px; border-radius: 8px;">
+  <h2 style="color: #d4af37;">🏪 Espace Vendeur JOYFULL</h2>
+  <button class="btn-primary" onclick="ouvrirFormulaireBoutique()">⚙️ Configurer ma Boutique</button>
+  <div id="formBoutique" style="display: none; margin-top: 15px;">
+    <input type="text" id="shopName" placeholder="Nom de la boutique">
+    <select id="shopCategory">
+      <option value="Mode">Mode & Vêtements</option>
+      <option value="Electronique">Électronique & Tech</option>
+      <option value="Restauration">Restaurants & Snack</option>
+      <option value="Accessoires">Accessoires</option>
+    </select>
+    <textarea id="shopDesc" placeholder="Description de la boutique..."></textarea>
+    <button class="btn-primary" onclick="sauvegarderBoutique()">Enregistrer ma boutique</button>
+  </div>
+</section>
+
+<!-- SECTION AVIS PUBLICS -->
+<section id="avisSection" style="padding: 20px;">
+  <h2 style="color: #d4af37;">💬 Avis publics de la communauté</h2>
+  <textarea id="avisTexte" placeholder="Laissez votre avis sur JOYFULL..."></textarea>
+  <button class="btn-primary" onclick="publierAvis()">Publier l'avis</button>
+  <div id="listeAvis" style="margin-top: 20px;"></div>
+</section>
 </body>
 </html>
