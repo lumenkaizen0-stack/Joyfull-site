@@ -9,154 +9,130 @@
 <style>
   :root{
     --gold:#D4AF37; --gold-soft:#E8CB6E;
-    --bg:#0A0A0A; --card:#141414; --card-border:#2A2205;
+    --bg:#0A0A0A; --card:#151515; --card-border:#2A2205;
     --text:#F3EAD3; --sub:#9A9284;
   }
   *{box-sizing:border-box; margin:0; padding:0;}
   body{
     background:var(--bg); color:var(--text); font-family:'Inter', sans-serif;
-    line-height:1.5; padding-bottom:76px;
+    line-height:1.5; padding-bottom:78px;
   }
   h1,h2,h3,.brand{font-family:'Cinzel', serif;}
   img{max-width:100%; display:block;}
   button{font-family:'Inter', sans-serif;}
+  a{text-decoration:none; color:inherit;}
 
   /* NAV */
   nav{
     position:sticky; top:0; z-index:60;
     display:flex; align-items:center; justify-content:space-between;
-    padding:16px 5vw; background:#0A0A0Aee; backdrop-filter:blur(8px);
+    padding:14px 5vw; background:#0A0A0Aee; backdrop-filter:blur(8px);
     border-bottom:1px solid var(--card-border);
   }
-  .icon-btn{background:none; border:none; color:var(--gold); font-size:1.3rem; cursor:pointer;}
-  .brand{font-size:1.3rem; font-weight:800; letter-spacing:1px;}
-  .brand .joy{color:var(--gold-soft);}
-  .brand .full{color:var(--text);}
+  .icon-btn{background:none; border:none; color:var(--text); font-size:1.3rem; cursor:pointer;}
+  .brand{font-size:1.15rem; font-weight:800; letter-spacing:1px; color:var(--gold-soft);}
   #cart-btn{
-    position:relative; background:var(--gold); color:#0A0A0A; border:none;
-    border-radius:24px; padding:9px 16px; font-weight:700; font-size:0.88rem; cursor:pointer;
+    position:relative; background:var(--card); color:var(--text); border:1px solid var(--card-border);
+    border-radius:20px; padding:8px 14px; font-weight:600; font-size:0.85rem; cursor:pointer;
     display:flex; align-items:center; gap:6px;
   }
   #cart-count{
-    background:#0A0A0A; color:var(--gold); font-size:0.68rem; font-weight:800;
-    width:18px; height:18px; border-radius:50%; display:flex; align-items:center; justify-content:center;
+    background:var(--gold); color:#0A0A0A; font-size:0.65rem; font-weight:800;
+    width:17px; height:17px; border-radius:50%; display:flex; align-items:center; justify-content:center;
   }
 
   /* SIDEBAR */
   #sidebar-overlay{position:fixed; inset:0; background:#000000aa; display:none; z-index:99;}
   #sidebar-overlay.open{display:block;}
   #sidebar{
-    position:fixed; top:0; left:0; height:100%; width:min(290px, 82vw);
+    position:fixed; top:0; left:0; height:100%; width:min(300px, 84vw);
     background:#0D0D0D; border-right:1px solid var(--card-border);
     z-index:100; transform:translateX(-100%); transition:transform .25s ease;
     display:flex; flex-direction:column;
   }
   #sidebar.open{transform:translateX(0);}
-  .sidebar-head{display:flex; align-items:center; justify-content:space-between; padding:20px; border-bottom:1px solid var(--card-border);}
-  .sidebar-logo{display:flex; align-items:center; gap:10px;}
-  .sidebar-logo img{width:32px; height:32px; border-radius:50%;}
-  .sidebar-logo span{font-family:'Cinzel', serif; font-weight:800; color:var(--gold); font-size:1rem;}
+  .sidebar-head{padding:24px 20px 18px; border-bottom:1px solid var(--card-border); display:flex; justify-content:space-between; align-items:flex-start;}
+  .sidebar-user{display:flex; align-items:center; gap:12px;}
+  .sidebar-user img{width:44px; height:44px; border-radius:50%; border:1px solid var(--gold);}
+  .sidebar-user .name{font-weight:700; font-size:0.95rem;}
+  .sidebar-user .plan{font-size:0.72rem; color:var(--gold); display:flex; align-items:center; gap:4px;}
   #close-sidebar{background:none; border:none; color:var(--text); font-size:1.2rem; cursor:pointer;}
-  .sidebar-nav{flex:1; padding:8px 0; overflow-y:auto;}
-  .sidebar-item{display:flex; align-items:center; gap:14px; padding:13px 20px; cursor:pointer; font-size:0.92rem; font-weight:500;}
-  .sidebar-item:hover{background:#1A1608; color:var(--gold);}
-  .sidebar-foot{padding:16px 20px; border-top:1px solid var(--card-border); display:flex; align-items:center; gap:10px; font-size:0.88rem;}
-  .user-avatar{width:32px; height:32px; border-radius:50%; background:var(--card); display:flex; align-items:center; justify-content:center;}
+  .sidebar-nav{flex:1; padding:10px 0; overflow-y:auto;}
+  .sidebar-item{display:flex; align-items:center; justify-content:space-between; padding:13px 20px; cursor:pointer; font-size:0.9rem; font-weight:500;}
+  .sidebar-item:hover, .sidebar-item.active{background:#1A1608; color:var(--gold);}
+  .sidebar-item .left{display:flex; align-items:center; gap:14px;}
+  .mini-badge{background:#C0392B; color:white; font-size:0.68rem; font-weight:700; padding:2px 7px; border-radius:10px;}
+  .sidebar-premium{
+    margin:14px 16px; padding:16px; border-radius:14px;
+    background:linear-gradient(135deg, #1A1608, #241d08);
+    border:1px solid var(--card-border);
+  }
+  .sidebar-premium p{font-size:0.82rem; color:var(--sub); margin-bottom:10px;}
+  .sidebar-premium button{width:100%; background:var(--gold); color:#0A0A0A; border:none; border-radius:20px; padding:9px; font-weight:700; font-size:0.82rem; cursor:pointer;}
+  .sidebar-foot{padding:14px 20px; border-top:1px solid var(--card-border); font-size:0.85rem; color:var(--sub); cursor:pointer;}
 
-  /* PROFIL / HERO */
-  .profile{
+  /* HERO */
+  .hero{
     text-align:center; padding:34px 6vw 24px;
     background:radial-gradient(circle at 25% 0%, #2A2003 0%, #0A0A0A 55%), linear-gradient(160deg, #0A0A0A 0%, #16130A 60%, #0A0A0A 100%);
     border-bottom:1px solid var(--card-border);
   }
-  .avatar{
-    width:130px; height:130px; border-radius:50%; margin:0 auto 16px;
+  .hero-logo{
+    width:110px; height:110px; border-radius:50%; margin:0 auto 14px;
     display:flex; align-items:center; justify-content:center;
     border:2px solid var(--gold); box-shadow:0 0 30px #D4AF3733;
     background:var(--card); overflow:hidden;
   }
-  .profile h1{font-size:1.9rem; color:var(--text); margin-bottom:8px; letter-spacing:2px;}
-  .profile p.bio{color:var(--sub); font-size:0.95rem; max-width:340px; margin:0 auto 20px;}
-  .auth-row{display:flex; gap:12px; justify-content:center; flex-wrap:wrap;}
-  .btn-gold{background:var(--gold); color:#0A0A0A; border:none; padding:13px 28px; border-radius:26px; font-weight:700; font-size:0.9rem; cursor:pointer;}
-  .btn-outline-gold{background:transparent; color:var(--gold); border:1px solid var(--gold); padding:12px 26px; border-radius:26px; font-weight:700; font-size:0.9rem; cursor:pointer;}
+  .hero h1{font-size:1.7rem; letter-spacing:2px; margin-bottom:8px;}
+  .hero p.tagline{color:var(--sub); font-size:0.9rem; margin-bottom:22px;}
 
-  section{padding:30px 5vw;}
-  .section-head h2{font-size:1.25rem; color:var(--gold-soft);}
-  .section-head p{color:var(--sub); font-size:0.85rem; margin-top:4px;}
+  .shortcut-row{display:flex; gap:10px; justify-content:center; flex-wrap:wrap;}
+  .shortcut-card{
+    background:var(--card); border:1px solid var(--card-border); border-radius:16px;
+    padding:14px 16px; text-align:center; cursor:pointer; min-width:74px;
+  }
+  .shortcut-card .ic{font-size:1.4rem; margin-bottom:6px;}
+  .shortcut-card .lb{font-size:0.72rem; font-weight:600; color:var(--sub);}
+
+  section{padding:26px 5vw;}
+  .section-head{display:flex; justify-content:space-between; align-items:baseline; margin-bottom:6px;}
+  .section-head h2{font-size:1.2rem; color:var(--text);}
+  .section-head a{color:var(--gold); font-size:0.8rem; font-weight:600;}
+  .section-sub{color:var(--sub); font-size:0.84rem; margin-bottom:16px;}
 
   /* CATEGORIES */
-  .cat-grid{display:grid; grid-template-columns:repeat(auto-fit, minmax(90px,1fr)); gap:12px; margin-top:16px;}
-  .cat-card{background:var(--card); border:1px solid var(--card-border); border-radius:16px; padding:16px 8px; text-align:center; cursor:pointer;}
-  .cat-card.active{border-color:var(--gold); box-shadow:0 0 14px #D4AF3722;}
-  .cat-emoji{font-size:1.7rem; margin-bottom:6px;}
-  .cat-name{font-weight:600; font-size:0.8rem;}
+  .cat-grid{display:grid; grid-template-columns:repeat(4, 1fr); gap:10px;}
+  .cat-card{background:var(--card); border:1px solid var(--card-border); border-radius:14px; padding:14px 4px; text-align:center; cursor:pointer;}
+  .cat-card.active{border-color:var(--gold); box-shadow:0 0 12px #D4AF3722;}
+  .cat-emoji{font-size:1.4rem; margin-bottom:5px;}
+  .cat-name{font-weight:600; font-size:0.68rem; line-height:1.2;}
 
-  /* BOUTIQUES */
-  .shops-grid{display:grid; grid-template-columns:repeat(auto-fit, minmax(140px,1fr)); gap:14px; margin-top:16px;}
-  .shop-card{background:var(--card); border:1px solid var(--card-border); border-radius:16px; padding:16px; text-align:center; cursor:pointer;}
-  .shop-card.empty{border-style:dashed; color:var(--sub); cursor:default;}
-  .shop-logo{width:50px; height:50px; border-radius:50%; background:#1c1c1c; margin:0 auto 10px; display:flex; align-items:center; justify-content:center; font-size:1.4rem;}
-  .shop-name{font-weight:700; font-size:0.88rem;}
-  .shop-sub{font-size:0.74rem; color:var(--sub);}
+  .day-banner{
+    margin-top:18px; background:var(--card); border:1px solid var(--card-border); border-radius:16px;
+    padding:16px 18px; display:flex; align-items:center; justify-content:space-between; gap:12px;
+  }
+  .day-banner .left{display:flex; align-items:center; gap:12px;}
+  .day-banner .ic{font-size:1.6rem;}
+  .day-banner h4{font-size:0.9rem;}
+  .day-banner p{font-size:0.76rem; color:var(--sub);}
+  .day-banner button{background:var(--gold); color:#0A0A0A; border:none; border-radius:18px; padding:9px 16px; font-weight:700; font-size:0.78rem; cursor:pointer; white-space:nowrap;}
 
-  #shop-panel{display:none; background:var(--card); border:1px solid var(--card-border); border-radius:18px; padding:20px; margin-top:16px;}
-  #shop-panel.open{display:block;}
-  .shop-panel-head{display:flex; justify-content:space-between; align-items:center; margin-bottom:14px;}
-  #close-shop{background:none; border:none; color:var(--text); font-size:1.1rem; cursor:pointer;}
-  .products-grid{display:grid; grid-template-columns:repeat(auto-fit, minmax(120px,1fr)); gap:10px;}
-  .product-card{background:#1A1A1A; border-radius:12px; padding:12px;}
-  .product-emoji{font-size:1.6rem; margin-bottom:6px;}
-  .product-card h4{font-size:0.82rem; margin-bottom:4px;}
-  .product-price{color:var(--gold); font-weight:700; font-size:0.8rem; margin-bottom:8px;}
-  .add-btn{width:100%; background:var(--gold); color:#0A0A0A; border:none; border-radius:8px; padding:7px; font-weight:700; font-size:0.76rem; cursor:pointer;}
-
-  /* QUIZ BAR */
-  #quiz-bar{
+  /* BOTTOM NAV MOBILE */
+  #bottom-nav{
     position:fixed; bottom:0; left:0; right:0; z-index:70;
     background:#0D0D0D; border-top:1px solid var(--card-border);
-    display:flex; align-items:center; justify-content:space-between; padding:12px 5vw;
+    display:flex; justify-content:space-around; padding:10px 0 12px;
   }
-  #quiz-bar .qb-left{display:flex; align-items:center; gap:10px;}
-  #quiz-bar h4{font-size:0.85rem;}
-  #quiz-bar p{font-size:0.72rem; color:var(--sub);}
-  #quiz-bar a{background:var(--gold); color:#0A0A0A; text-decoration:none; font-weight:700; font-size:0.8rem; padding:9px 16px; border-radius:20px;}
-
-  footer{padding:20px 5vw 90px; text-align:center; color:var(--sub); font-size:0.8rem;}
-
-  /* PANIER */
-  #cart-overlay{position:fixed; inset:0; background:#000000aa; display:none; z-index:100;}
-  #cart-overlay.open{display:block;}
-  #cart-drawer{
-    position:fixed; top:0; right:0; height:100%; width:min(380px, 92vw);
-    background:#0D0D0D; z-index:101; transform:translateX(100%);
-    transition:transform .25s ease; display:flex; flex-direction:column;
-    border-left:1px solid var(--card-border);
+  .bn-item{display:flex; flex-direction:column; align-items:center; gap:3px; color:var(--sub); font-size:0.66rem; cursor:pointer; position:relative;}
+  .bn-item.active{color:var(--gold);}
+  .bn-item .ic{font-size:1.2rem;}
+  .bn-badge{
+    position:absolute; top:-4px; right:2px; background:#C0392B; color:white;
+    font-size:0.6rem; font-weight:700; width:14px; height:14px; border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
   }
-  #cart-drawer.open{transform:translateX(0);}
-  .cart-head{padding:20px 22px; border-bottom:1px solid var(--card-border); display:flex; justify-content:space-between; align-items:center;}
-  #close-cart{background:none; border:none; font-size:1.2rem; cursor:pointer; color:var(--text);}
-  #cart-items{flex:1; overflow-y:auto; padding:14px 22px;}
-  .cart-item{display:flex; justify-content:space-between; align-items:center; padding:10px 0; border-bottom:1px solid #1c1c1c; gap:10px;}
-  .ci-name{font-weight:600; font-size:0.86rem;}
-  .ci-price{color:var(--sub); font-size:0.76rem;}
-  .qty-controls{display:flex; align-items:center; gap:8px;}
-  .qty-controls button{width:24px; height:24px; border-radius:8px; border:1px solid #333; background:#1a1a1a; color:var(--text); cursor:pointer; font-weight:700;}
-  #empty-msg{color:var(--sub); text-align:center; margin-top:40px; font-size:0.86rem;}
-  .cart-foot{padding:18px 22px; border-top:1px solid var(--card-border);}
-  .cart-total{display:flex; justify-content:space-between; font-weight:700; margin-bottom:12px;}
-  #checkout-btn{width:100%; background:var(--gold); color:#0A0A0A; border:none; border-radius:14px; padding:13px; font-weight:700; cursor:pointer;}
-  #checkout-btn:disabled{background:#333; color:#777; cursor:not-allowed;}
-  .pay-note{font-size:0.72rem; color:var(--sub); text-align:center; margin-top:8px;}
 
-  #confirm-overlay{position:fixed; inset:0; background:#000000cc; display:none; z-index:200; align-items:center; justify-content:center; padding:20px;}
-  #confirm-overlay.open{display:flex;}
-  #confirm-box{background:#0D0D0D; border:1px solid var(--gold); border-radius:20px; padding:30px 24px; max-width:340px; text-align:center;}
-  #confirm-box .check{font-size:2.4rem; margin-bottom:10px;}
-  #order-id{color:var(--gold); font-weight:700;}
-  #confirm-box button{background:var(--gold); color:#0A0A0A; border:none; border-radius:12px; padding:12px 20px; font-weight:700; cursor:pointer;}
-
-  /* MODAL AUTH */
+  /* MODAL AUTH (conservé) */
   .modal-overlay{position:fixed; inset:0; background:#000000e5; display:none; align-items:center; justify-content:center; z-index:200; padding:20px; backdrop-filter:blur(4px);}
   .modal-overlay.show{display:flex;}
   .modal-box{background:#0D0D0D; border:1px solid var(--gold); padding:26px 22px; border-radius:18px; width:100%; max-width:380px; position:relative;}
@@ -167,7 +143,7 @@
   .role-selector input{display:none;}
   .role-selector label:has(input:checked){background:var(--gold); color:#0A0A0A; font-weight:700;}
   input, select, textarea{width:100%; padding:12px; margin-bottom:11px; background:#141414; border:1px solid #2a2a2a; color:var(--text); border-radius:9px; font-size:0.88rem; outline:none;}
-  input:focus, textarea:focus{border-color:var(--gold);}
+  input:focus{border-color:var(--gold);}
   .btn-submit{background:var(--gold); color:#0A0A0A; border:none; padding:12px 24px; font-weight:700; border-radius:9px; cursor:pointer; font-size:0.88rem; width:100%;}
   .btn-google{width:100%; padding:11px; background:#fff; color:#000; border:none; border-radius:9px; font-weight:700; margin-top:10px; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:8px; font-size:0.86rem;}
 </style>
@@ -176,99 +152,83 @@
 
 <nav>
   <button class="icon-btn" onclick="openSidebar()">☰</button>
-  <div class="brand"><span class="joy">JOY</span><span class="full">FULL</span></div>
-  <button id="cart-btn" onclick="toggleCart(true)">🛒 <span id="cart-count">0</span></button>
+  <div class="brand">JOYFULL</div>
+  <button id="cart-btn" onclick="alert('Page panier — prochaine étape 🙂')">🛒 <span id="cart-count">0</span></button>
 </nav>
 
 <!-- SIDEBAR -->
 <div id="sidebar-overlay" onclick="closeSidebar()"></div>
 <div id="sidebar">
   <div class="sidebar-head">
-    <div class="sidebar-logo"><img src="joyfull.png" alt="JOYFULL"><span>JOYFULL</span></div>
+    <div class="sidebar-user">
+      <img src="joyfull.png" alt="profil">
+      <div>
+        <div class="name" id="sidebar-username">Non connecté</div>
+        <div class="plan" id="sidebar-plan"></div>
+      </div>
+    </div>
     <button id="close-sidebar" onclick="closeSidebar()">✕</button>
   </div>
   <div class="sidebar-nav">
-    <div class="sidebar-item">🏠 Accueil</div>
-    <div class="sidebar-item" onclick="document.getElementById('shops-section').scrollIntoView({behavior:'smooth'}); closeSidebar();">🏬 Boutiques</div>
-    <div class="sidebar-item">⭐ Avis</div>
-    <div class="sidebar-item">💬 Commentaires</div>
-    <div class="sidebar-item">💭 Chat</div>
-    <div class="sidebar-item">🔔 Notifications</div>
-    <div class="sidebar-item" onclick="ouvrirAuthModal()">👤 Mon compte</div>
-    <div class="sidebar-item" onclick="ouvrirAuthModal('vendeur')">🏪 Devenir vendeur</div>
-    <div class="sidebar-item">⚙️ Paramètres</div>
+    <div class="sidebar-item active"><span class="left">🏠 Accueil</span></div>
+    <div class="sidebar-item" onclick="document.getElementById('categories').scrollIntoView({behavior:'smooth'}); closeSidebar();"><span class="left">🛍️ Boutique</span></div>
+    <div class="sidebar-item"><span class="left">🏆 Quiz & Défis</span></div>
+    <div class="sidebar-item"><span class="left">👥 Communauté</span></div>
+    <div class="sidebar-item"><span class="left">🎁 Mes Récompenses</span></div>
+    <div class="sidebar-item"><span class="left">🔔 Notifications</span><span class="mini-badge">3</span></div>
+    <div class="sidebar-item"><span class="left">💬 Messages</span><span class="mini-badge">2</span></div>
+    <div class="sidebar-item" onclick="ouvrirAuthModal('vendeur')"><span class="left">🏪 Devenir vendeur</span></div>
+    <div class="sidebar-item"><span class="left">⚙️ Paramètres</span></div>
   </div>
-  <div class="sidebar-foot">
-    <div class="user-avatar">👤</div>
-    <span id="sidebar-username">Non connecté</span>
+  <div class="sidebar-premium">
+    <p>👑 Deviens Premium — plus d'avantages, plus de possibilités !</p>
+    <button>Voir les offres</button>
   </div>
+  <div class="sidebar-foot" id="sidebar-auth-action" onclick="ouvrirAuthModal()">↪ Connexion / Inscription</div>
 </div>
 
-<div class="profile">
-  <div class="avatar"><img src="joyfull.png" alt="JOYFULL" style="width:100%;height:100%;object-fit:cover;border-radius:50%;"></div>
+<div class="hero">
+  <div class="hero-logo"><img src="joyfull.png" alt="JOYFULL" style="width:100%;height:100%;object-fit:cover;border-radius:50%;"></div>
   <h1>JOYFULL</h1>
-  <p class="bio">Ventes et achats, bons articles Lubumbashi 🛍️</p>
-  <div class="auth-row">
-    <button class="btn-gold" onclick="ouvrirAuthModal()">S'inscrire</button>
-    <button class="btn-outline-gold" onclick="ouvrirAuthModal(); document.querySelectorAll('.modal-close')">Se connecter</button>
+  <p class="tagline">Plus qu'une plateforme, une communauté 🚀</p>
+  <div class="shortcut-row">
+    <div class="shortcut-card"><div class="ic">🛍️</div><div class="lb">Boutique</div></div>
+    <div class="shortcut-card"><div class="ic">🏆</div><div class="lb">Quiz</div></div>
+    <div class="shortcut-card"><div class="ic">👥</div><div class="lb">Communauté</div></div>
+    <div class="shortcut-card"><div class="ic">👑</div><div class="lb">Accès Premium</div></div>
   </div>
 </div>
 
 <section id="categories">
-  <div class="section-head">
-    <h2>Catégories</h2>
-    <p>Choisis une catégorie pour voir toutes les boutiques disponibles.</p>
+  <div class="section-head"><h2>Catégories</h2><a href="#">Voir tout →</a></div>
+  <p class="section-sub">Explore nos catégories et découvre des contenus, des produits et des activités qui te correspondent.</p>
+  <div class="cat-grid">
+    <div class="cat-card"><div class="cat-emoji">🍲</div><div class="cat-name">Nourriture</div></div>
+    <div class="cat-card active"><div class="cat-emoji">🛍️</div><div class="cat-name">Boutique</div></div>
+    <div class="cat-card"><div class="cat-emoji">📱</div><div class="cat-name">Accès Pratique</div></div>
+    <div class="cat-card"><div class="cat-emoji">💄</div><div class="cat-name">Beauté</div></div>
+    <div class="cat-card"><div class="cat-emoji">👕</div><div class="cat-name">Mode</div></div>
+    <div class="cat-card"><div class="cat-emoji">🎮</div><div class="cat-name">Jeux</div></div>
+    <div class="cat-card"><div class="cat-emoji">📚</div><div class="cat-name">Éducation</div></div>
+    <div class="cat-card"><div class="cat-emoji">⚏</div><div class="cat-name">Autres</div></div>
   </div>
-  <div class="cat-grid" id="cat-grid"></div>
-  <div id="shop-panel">
-    <div class="shop-panel-head">
-      <h3 id="shop-panel-title">Boutique</h3>
-      <button id="close-shop" onclick="closeShopPanel()">✕</button>
+  <div class="day-banner">
+    <div class="left">
+      <div class="ic">🌟</div>
+      <div><h4>Accès du Jour</h4><p>Profite de nos offres actuelles →</p></div>
     </div>
-    <div class="products-grid" id="shop-products"></div>
+    <button>Voir les offres</button>
   </div>
 </section>
 
-<section id="shops-section">
-  <div class="section-head">
-    <h2 id="shops-title">Boutiques</h2>
-    <p id="shops-sub">Toutes les boutiques de cette catégorie.</p>
-  </div>
-  <div class="shops-grid" id="shops-grid"></div>
-</section>
-
-<footer>JOYFULL · Lubumbashi 🇨🇩</footer>
-
-<div id="quiz-bar">
-  <div class="qb-left">
-    <div style="font-size:1.4rem;">🔥</div>
-    <div><h4>Quiz du jour</h4><p>Série : 3 jours</p></div>
-  </div>
-  <a href="#">Jouer (colle ton lien Forms)</a>
+<div id="bottom-nav">
+  <div class="bn-item active"><div class="ic">🏠</div>Accueil</div>
+  <div class="bn-item"><div class="ic">🔎</div>Découvrir</div>
+  <div class="bn-item"><div class="ic">💬</div>Messages<span class="bn-badge">2</span></div>
+  <div class="bn-item" onclick="ouvrirAuthModal()"><div class="ic">👤</div>Profil</div>
 </div>
 
-<!-- PANIER -->
-<div id="cart-overlay" onclick="toggleCart(false)"></div>
-<div id="cart-drawer">
-  <div class="cart-head"><h3>Ton panier</h3><button id="close-cart" onclick="toggleCart(false)">✕</button></div>
-  <div id="cart-items"><div id="empty-msg">Ton panier est vide pour l'instant.</div></div>
-  <div class="cart-foot">
-    <div class="cart-total"><span>Total</span><span id="cart-total-amount">0 $</span></div>
-    <button id="checkout-btn" disabled onclick="confirmOrder()">Confirmer ma commande</button>
-    <p class="pay-note">Paiement à la livraison — Mobile Money ou cash 🤝</p>
-  </div>
-</div>
-
-<div id="confirm-overlay">
-  <div id="confirm-box">
-    <div class="check">✅</div>
-    <h3>Commande confirmée !</h3>
-    <p style="color:var(--sub); font-size:0.88rem; margin:10px 0 16px;">Ta commande <span id="order-id">#0000</span> est enregistrée. Notre équipe te contacte pour la livraison.</p>
-    <button onclick="closeConfirm()">Continuer mes achats</button>
-  </div>
-</div>
-
-<!-- MODAL AUTH -->
+<!-- MODAL AUTH (logique Firebase conservée) -->
 <div id="authModal" class="modal-overlay">
   <div class="modal-box">
     <button class="modal-close" onclick="fermerAuthModal()">✕</button>
@@ -291,11 +251,9 @@
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
   import { getAuth, createUserWithEmailAndPassword, signInWithPopup, GoogleAuthProvider, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-  import { getFirestore, doc, setDoc, getDoc, collection, addDoc, onSnapshot, query, orderBy } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+  import { getFirestore, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
-  // ⚠️ REMPLACE PAR TES VRAIES VALEURS ⚠️
-  // console.firebase.google.com → projet joyfull-a1fba → ⚙️ Paramètres du projet
-  // → descends jusqu'à "Vos applications" → copie l'objet firebaseConfig affiché
+  // ⚠️ COLLE ICI TA VRAIE CONFIG FIREBASE (console.firebase.google.com → ⚙️ → Vos applications) ⚠️
   const firebaseConfig = {
     apiKey: "COLLE_TA_VRAIE_CLE_ICI",
     authDomain: "joyfull-a1fba.firebaseapp.com",
@@ -307,18 +265,22 @@
   const app = initializeApp(firebaseConfig);
   const auth = getAuth(app);
   const db = getFirestore(app);
-  let utilisateurActuel = null;
 
   window.openSidebar = () => { document.getElementById('sidebar').classList.add('open'); document.getElementById('sidebar-overlay').classList.add('open'); };
   window.closeSidebar = () => { document.getElementById('sidebar').classList.remove('open'); document.getElementById('sidebar-overlay').classList.remove('open'); };
 
   onAuthStateChanged(auth, async (user) => {
     if (user){
-      utilisateurActuel = user;
       document.getElementById("sidebar-username").innerText = user.displayName || user.email || "Mon compte";
+      document.getElementById("sidebar-auth-action").innerText = "↪ Déconnexion";
+      const uDoc = await getDoc(doc(db, "users", user.uid));
+      if (uDoc.exists() && uDoc.data().role === "vendeur"){
+        document.getElementById("sidebar-plan").innerText = "🏪 Vendeur";
+      }
     } else {
-      utilisateurActuel = null;
       document.getElementById("sidebar-username").innerText = "Non connecté";
+      document.getElementById("sidebar-plan").innerText = "";
+      document.getElementById("sidebar-auth-action").innerText = "↪ Connexion / Inscription";
     }
   });
 
@@ -353,101 +315,6 @@
     closeSidebar();
   };
   window.fermerAuthModal = () => document.getElementById("authModal").classList.remove("show");
-
-  // ===== CATALOGUE (boutiques/produits) =====
-  const CATEGORIES = [
-    { id:"nourriture", name:"Nourriture", emoji:"🍲" },
-    { id:"boutique", name:"Boutique", emoji:"🛍️" },
-    { id:"electronique", name:"Accessoires électroniques", emoji:"📱💻" },
-    { id:"beaute", name:"Beauté", emoji:"💄" },
-  ];
-  const SHOPS = [
-    { id:1, category:"boutique", name:"Boutique Bila", logo:"🏬", products:[
-      { id:101, name:"Article 1", price:8, emoji:"👗" },
-      { id:102, name:"Article 2", price:12, emoji:"👜" },
-    ]},
-    { id:2, category:"boutique", name:"Boutique Nouvel Ange", logo:"✨", products:[
-      { id:103, name:"Article 1", price:10, emoji:"👟" },
-    ]},
-    { id:3, category:"nourriture", name:"Nom du resto", logo:"🍽️", products:[
-      { id:201, name:"Plat du jour", price:5, emoji:"🍛" },
-    ]},
-  ];
-  const SLOTS_PER_CATEGORY = 6;
-  let activeCategory = CATEGORIES[0].id;
-  let cart = {};
-
-  function allProducts(){ return SHOPS.flatMap(s => s.products.map(p => ({...p, shopName:s.name}))); }
-
-  function renderCategories(){
-    document.getElementById('cat-grid').innerHTML = CATEGORIES.map(c => `
-      <div class="cat-card ${c.id===activeCategory?'active':''}" onclick="selectCategory('${c.id}')">
-        <div class="cat-emoji">${c.emoji}</div><div class="cat-name">${c.name}</div>
-      </div>`).join('');
-  }
-  window.selectCategory = (catId) => { activeCategory=catId; closeShopPanel(); renderCategories(); renderShops(); };
-
-  function renderShops(){
-    const cat = CATEGORIES.find(c=>c.id===activeCategory);
-    document.getElementById('shops-title').textContent = cat.name;
-    document.getElementById('shops-sub').textContent = `Toutes les boutiques "${cat.name}" disponibles sur JOYFULL.`;
-    const shopsInCat = SHOPS.filter(s=>s.category===activeCategory);
-    const emptySlots = Math.max(0, SLOTS_PER_CATEGORY - shopsInCat.length);
-    let html = shopsInCat.map(s => `
-      <div class="shop-card" onclick="openShop(${s.id})">
-        <div class="shop-logo">${s.logo}</div><div class="shop-name">${s.name}</div>
-        <div class="shop-sub">${s.products.length} article(s)</div>
-      </div>`).join('');
-    for(let i=0;i<emptySlots;i++){
-      html += `<div class="shop-card empty"><div class="shop-logo">➕</div><div class="shop-name">Emplacement libre</div><div class="shop-sub">Ajoute une boutique ici</div></div>`;
-    }
-    document.getElementById('shops-grid').innerHTML = html;
-  }
-
-  window.openShop = (shopId) => {
-    const shop = SHOPS.find(s=>s.id===shopId);
-    document.getElementById('shop-panel-title').textContent = shop.name;
-    document.getElementById('shop-products').innerHTML = shop.products.map(p => `
-      <div class="product-card"><div class="product-emoji">${p.emoji}</div><h4>${p.name}</h4>
-        <div class="product-price">${p.price} $</div>
-        <button class="add-btn" onclick="addToCart(${p.id})">Ajouter</button></div>`).join('');
-    document.getElementById('shop-panel').classList.add('open');
-    document.getElementById('shop-panel').scrollIntoView({behavior:'smooth', block:'center'});
-  };
-  window.closeShopPanel = () => document.getElementById('shop-panel').classList.remove('open');
-
-  window.addToCart = (productId) => { cart[productId]=(cart[productId]||0)+1; renderCart(); toggleCart(true); };
-  window.changeQty = (productId, delta) => { cart[productId]=(cart[productId]||0)+delta; if(cart[productId]<=0) delete cart[productId]; renderCart(); };
-
-  function renderCart(){
-    const products = allProducts();
-    const itemsEl = document.getElementById('cart-items');
-    const ids = Object.keys(cart);
-    let total=0, count=0;
-    if(ids.length===0){ itemsEl.innerHTML = '<div id="empty-msg">Ton panier est vide pour l\'instant.</div>'; }
-    else {
-      itemsEl.innerHTML = ids.map(id => {
-        const p = products.find(x=>x.id==id); const qty=cart[id];
-        total += p.price*qty; count += qty;
-        return `<div class="cart-item"><div><div class="ci-name">${p.name}</div><div class="ci-price">${p.shopName} · ${p.price} $ x ${qty}</div></div>
-          <div class="qty-controls"><button onclick="changeQty(${p.id},-1)">−</button><span>${qty}</span><button onclick="changeQty(${p.id},1)">+</button></div></div>`;
-      }).join('');
-    }
-    document.getElementById('cart-count').textContent = count;
-    document.getElementById('cart-total-amount').textContent = total + ' $';
-    document.getElementById('checkout-btn').disabled = count===0;
-  }
-  window.toggleCart = (open) => { document.getElementById('cart-drawer').classList.toggle('open',open); document.getElementById('cart-overlay').classList.toggle('open',open); };
-
-  window.confirmOrder = () => {
-    if(Object.keys(cart).length===0) return;
-    document.getElementById('order-id').textContent = '#' + Math.floor(1000+Math.random()*9000);
-    document.getElementById('confirm-overlay').classList.add('open');
-    toggleCart(false); cart={}; renderCart();
-  };
-  window.closeConfirm = () => document.getElementById('confirm-overlay').classList.remove('open');
-
-  renderCategories(); renderShops(); renderCart();
 </script>
 </body>
 </html>
