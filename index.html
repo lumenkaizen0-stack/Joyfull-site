@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JOYFULL - Lubumbashi</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --gold:#D4AF37; --gold-soft:#E8CB6E;
+    --bg:#0A0A0A; --card:#141414; --card-border:#2A2205;
+    --text:#F3EAD3; --sub:#9A9284;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{
+    background:var(--bg); color:var(--text); font-family:'Inter', sans-serif;
+    line-height:1.5; padding-bottom:76px;
+  }
+  h1,h2,h3,.brand{font-family:'Cinzel', serif;}
+  img{max-width:100%; display:block;}
+  button{font-family:'Inter', sans-serif;}
+
+  /* NAV */
+  nav{
+    position:sticky; top:0; z-index:60;
+    display:flex; align-items:center; justify-content:space-between;
+    padding:16px 5vw; background:#0A0A0Aee; backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--card-border);
+  }
+  .icon-btn{background:none; border:none; color:var(--gold); font-size:1.3rem; cursor:pointer;}
+  .brand{font-size:1.3rem; font-weight:800; letter-spacing:1px;}
+  .brand .joy{color:var(--gold-soft);}
+  .brand .full{color:var(--text);}
+  #cart-btn{
+    position:relative; background:var(--gold); color:#0A0A0A; border:none;
+    border-radius:24px; padding:9px 16px; font-weight:700; font-size:0.88rem; cursor:pointer;
+    display:flex; align-items:center; gap:6px;
+  }
+  #cart-count{
+    background:#0A0A0A; color:var(--gold); font-size:0.68rem; font-weight:800;
+    width:18px; height:18px; border-radius:50%; display:flex; align-items:center; justify-content:center;
+  }
+
+  /* SIDEBAR */
+  #sidebar-overlay{position:fixed; inset:0; background:#000000aa; display:none; z-index:99;}
+  #sidebar-overlay.open{display:block;}
+  #sidebar{
+    position:fixed; top:0; left:0; height:100%; width:min(290px, 82vw);
+    background:#0D0D0D; border-right:1px solid var(--card-border);
+    z-index:100; transform:translateX(-100%); transition:transform .25s ease;
+    display:flex; flex-direction:column;
+  }
+  #sidebar.open{transform:translateX(0);}
+  .sidebar-head{display:flex; align-items:center; justify-content:space-between; padding:20px; border-bottom:1px solid var(--card-border);}
+  .sidebar-logo{display:flex; align-items:center; gap:10px;}
+  .sidebar-logo img{width:32px; height:32px; border-radius:50%;}
+  .sidebar-logo span{font-family:'Cinzel', serif; font-weight:800; color:var(--gold); font-size:1rem;}
+  #close-sidebar{background:none; border:none; color:var(--text); font-size:1.2rem; cursor:pointer;}
+  .sidebar-nav{flex:1; padding:8px 0; overflow-y:auto;}
+  .sidebar-item{display:flex; align-items:center; gap:14px; padding:13px 20px; cursor:pointer; font-size:0.92rem; font-weight:500;}
+  .sidebar-item:hover{background:#1A1608; color:var(--gold);}
+  .sidebar-foot{padding:16px 20px; border-top:1px solid var(--card-border); display:flex; align-items:center; gap:10px; font-size:0.88rem;}
+  .user-avatar{width:32px; height:32px; border-radius:50%; background:var(--card); display:flex; align-items:center; justify-content:center;}
+
+  /* PROFIL / HERO */
+  .profile{
+    text-align:center; padding:34px 6vw 24px;
+    background:radial-gradient(circle at 25% 0%, #2A2003 0%, #0A0A0A 55%), linear-gradient(160deg, #0A0A0A 0%, #16130A 60%, #0A0A0A 100%);
+    border-bottom:1px solid var(--card-border);
+  }
+  .avatar{
+    width:130px; height:130px; border-radius:50%; margin:0 auto 16px;
+    display:flex; align-items:center; justify-content:center;
+    border:2px solid var(--gold); box-shadow:0 0 30px #D4AF3733;
+    background:var(--card); overflow:hidden;
+  }
+  .profile h1{font-size:1.9rem; color:var(--text); margin-bottom:8px; letter-spacing:2px;}
+  .profile p.bio{color:var(--sub); font-size:0.95rem; max-width:340px; margin:0 auto 20px;}
+  .auth-row{display:flex; gap:12px; justify-content:center; flex-wrap:wrap;}
+  .btn-gold{background:var(--gold); color:#0A0A0A; border:none; padding:13px 28px; border-radius:26px; font-weight:700; font-size:0.9rem; cursor:pointer;}
+  .btn-outline-gold{background:transparent; color:var(--gold); border:1px solid var(--gold); padding:12px 26px; border-radius:26px; font-weight:700; font-size:0.9rem; cursor:pointer;}
+
+  section{padding:30px 5vw;}
+  .section-head h2{font-size:1.25rem; color:var(--gold-soft);}
+  .section-head p{color:var(--sub); font-size:0.85rem; margin-top:4px;}
+
+  /* CATEGORIES */
+  .cat-grid{display:grid; grid-template-columns:repeat(auto-fit, minmax(90px,1fr)); gap:12px; margin-top:16px;}
+  .cat-card{background:var(--card); border:1px solid var(--card-border); border-radius:16px; padding:16px 8px; text-align:center; cursor:pointer;}
+  .cat-card.active{border-color:var(--gold); box-shadow:0 0 14px #D4AF3722;}
+  .cat-emoji{font-size:1.7rem; margin-bottom:6px;}
+  .cat-name{font-weight:600; font-size:0.8rem;}
+
+  /* BOUTIQUES */
+  .shops-grid{display:grid; grid-template-columns:repeat(auto-fit, minmax(140px,1fr)); gap:14px; margin-top:16px;}
+  .shop-card{background:var(--card); border:1px solid var(--card-border); border-radius:16px; padding:16px; text-align:center; cursor:pointer;}
+  .shop-card.empty{border-style:dashed; color:var(--sub); cursor:default;}
+  .shop-logo{width:50px; height:50px; border-radius:50%; background:#1c1c1c; margin:0 auto 10px; display:flex; align-items:center; justify-content:center; font-size:1.4rem;}
+  .shop-name{font-weight:700; font-size:0.88rem;}
+  .shop-sub{font-size:0.74rem; color:var(--sub);}
+
+  #shop-panel{display:none; background:var(--card); border:1px solid var(--card-border); border-radius:18px; padding:20px; margin-top:16px;}
+  #shop-panel.open{display:block;}
+  .shop-panel-head{display:flex; justify-content:space-between; align-items:center; margin-bottom:14px;}
+  #close-shop{background:none; border:none; color:var(--text); font-size:1.1rem; cursor:pointer;}
+  .products-grid{display:grid; grid-template-columns:repeat(auto-fit, minmax(120px,1fr)); gap:10px;}
+  .product-card{background:#1A1A1A; border-radius:12px; padding:12px;}
+  .product-emoji{font-size:1.6rem; margin-bottom:6px;}
+  .product-card h4{font-size:0.82rem; margin-bottom:4px;}
+  .product-price{color:var(--gold); font-weight:700; font-size:0.8rem; margin-bottom:8px;}
+  .add-btn{width:100%; background:var(--gold); color:#0A0A0A; border:none; border-radius:8px; padding:7px; font-weight:700; font-size:0.76rem; cursor:pointer;}
+
+  /* QUIZ BAR */
+  #quiz-bar{
+    position:fixed; bottom:0; left:0; right:0; z-index:70;
+    background:#0D0D0D; border-top:1px solid var(--card-border);
+    display:flex; align-items:center; justify-content:space-between; padding:12px 5vw;
+  }
+  #quiz-bar .qb-left{display:flex; align-items:center; gap:10px;}
+  #quiz-bar h4{font-size:0.85rem;}
+  #quiz-bar p{font-size:0.72rem; color:var(--sub);}
+  #quiz-bar a{background:var(--gold); color:#0A0A0A; text-decoration:none; font-weight:700; font-size:0.8rem; padding:9px 16px; border-radius:20px;}
+
+  footer{padding:20px 5vw 90px; text-align:center; color:var(--sub); font-size:0.8rem;}
+
+  /* PANIER */
+  #cart-overlay{position:fixed; inset:0; background:#000000aa; display:none; z-index:100;}
+  #cart-overlay.open{display:block;}
+  #cart-drawer{
+    position:fixed; top:0; right:0; height:100%; width:min(380px, 92vw);
+    background:#0D0D0D; z-index:101; transform:translateX(100%);
+    transition:transform .25s ease; display:flex; flex-direction:column;
+    border-left:1px solid var(--card-border);
+  }
+  #cart-drawer.open{transform:translateX(0);}
+  .cart-head{padding:20px 22px; border-bottom:1px solid var(--card-border); display:flex; justify-content:space-between; align-items:center;}
+  #close-cart{background:none; border:none; font-size:1.2rem; cursor:pointer; color:var(--text);}
+  #cart-items{flex:1; overflow-y:auto; padding:14px 22px;}
+  .cart-item{display:flex; justify-content:space-between; align-items:center; padding:10px 0; border-bottom:1px solid #1c1c1c; gap:10px;}
+  .ci-name{font-weight:600; font-size:0.86rem;}
+  .ci-price{color:var(--sub); font-size:0.76rem;}
+  .qty-controls{display:flex; align-items:center; gap:8px;}
+  .qty-controls button{width:24px; height:24px; border-radius:8px; border:1px solid #333; background:#1a1a1a; color:var(--text); cursor:pointer; font-weight:700;}
+  #empty-msg{color:var(--sub); text-align:center; margin-top:40px; font-size:0.86rem;}
+  .cart-foot{padding:18px 22px; border-top:1px solid var(--card-border);}
+  .cart-total{display:flex; justify-content:space-between; font-weight:700; margin-bottom:12px;}
+  #checkout-btn{width:100%; background:var(--gold); color:#0A0A0A; border:none; border-radius:14px; padding:13px; font-weight:700; cursor:pointer;}
+  #checkout-btn:disabled{background:#333; color:#777; cursor:not-allowed;}
+  .pay-note{font-size:0.72rem; color:var(--sub); text-align:center; margin-top:8px;}
+
+  #confirm-overlay{position:fixed; inset:0; background:#000000cc; display:none; z-index:200; align-items:center; justify-content:center; padding:20px;}
+  #confirm-overlay.open{display:flex;}
+  #confirm-box{background:#0D0D0D; border:1px solid var(--gold); border-radius:20px; padding:30px 24px; max-width:340px; text-align:center;}
+  #confirm-box .check{font-size:2.4rem; margin-bottom:10px;}
+  #order-id{color:var(--gold); font-weight:700;}
+  #confirm-box button{background:var(--gold); color:#0A0A0A; border:none; border-radius:12px; padding:12px 20px; font-weight:700; cursor:pointer;}
+
+  /* MODAL AUTH */
+  .modal-overlay{position:fixed; inset:0; background:#000000e5; display:none; align-items:center; justify-content:center; z-index:200; padding:20px; backdrop-filter:blur(4px);}
+  .modal-overlay.show{display:flex;}
+  .modal-box{background:#0D0D0D; border:1px solid var(--gold); padding:26px 22px; border-radius:18px; width:100%; max-width:380px; position:relative;}
+  .modal-close{position:absolute; top:12px; right:16px; background:none; border:none; color:var(--text); font-size:1.2rem; cursor:pointer;}
+  .modal-box h2{color:var(--gold); text-align:center; font-size:1.15rem; margin-bottom:16px;}
+  .role-selector{display:flex; gap:10px; margin:6px 0 14px; background:#1c1c1c; padding:5px; border-radius:9px;}
+  .role-selector label{flex:1; text-align:center; padding:9px; cursor:pointer; color:var(--sub); border-radius:6px; font-size:0.84rem;}
+  .role-selector input{display:none;}
+  .role-selector label:has(input:checked){background:var(--gold); color:#0A0A0A; font-weight:700;}
+  input, select, textarea{width:100%; padding:12px; margin-bottom:11px; background:#141414; border:1px solid #2a2a2a; color:var(--text); border-radius:9px; font-size:0.88rem; outline:none;}
+  input:focus, textarea:focus{border-color:var(--gold);}
+  .btn-submit{background:var(--gold); color:#0A0A0A; border:none; padding:12px 24px; font-weight:700; border-radius:9px; cursor:pointer; font-size:0.88rem; width:100%;}
+  .btn-google{width:100%; padding:11px; background:#fff; color:#000; border:none; border-radius:9px; font-weight:700; margin-top:10px; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:8px; font-size:0.86rem;}
+</style>
+</head>
+<body>
+
+<nav>
+  <button class="icon-btn" onclick="openSidebar()">☰</button>
+  <div class="brand"><span class="joy">JOY</span><span class="full">FULL</span></div>
+  <button id="cart-btn" onclick="toggleCart(true)">🛒 <span id="cart-count">0</span></button>
+</nav>
+
+<!-- SIDEBAR -->
+<div id="sidebar-overlay" onclick="closeSidebar()"></div>
+<div id="sidebar">
+  <div class="sidebar-head">
+    <div class="sidebar-logo"><img src="joyfull.png" alt="JOYFULL"><span>JOYFULL</span></div>
+    <button id="close-sidebar" onclick="closeSidebar()">✕</button>
+  </div>
+  <div class="sidebar-nav">
+    <div class="sidebar-item">🏠 Accueil</div>
+    <div class="sidebar-item" onclick="document.getElementById('shops-section').scrollIntoView({behavior:'smooth'}); closeSidebar();">🏬 Boutiques</div>
+    <div class="sidebar-item">⭐ Avis</div>
+    <div class="sidebar-item">💬 Commentaires</div>
+    <div class="sidebar-item">💭 Chat</div>
+    <div class="sidebar-item">🔔 Notifications</div>
+    <div class="sidebar-item" onclick="ouvrirAuthModal()">👤 Mon compte</div>
+    <div class="sidebar-item" onclick="ouvrirAuthModal('vendeur')">🏪 Devenir vendeur</div>
+    <div class="sidebar-item">⚙️ Paramètres</div>
+  </div>
+  <div class="sidebar-foot">
+    <div class="user-avatar">👤</div>
+    <span id="sidebar-username">Non connecté</span>
+  </div>
+</div>
+
+<div class="profile">
+  <div class="avatar"><img src="joyfull.png" alt="JOYFULL" style="width:100%;height:100%;object-fit:cover;border-radius:50%;"></div>
+  <h1>JOYFULL</h1>
+  <p class="bio">Ventes et achats, bons articles Lubumbashi 🛍️</p>
+  <div class="auth-row">
+    <button class="btn-gold" onclick="ouvrirAuthModal()">S'inscrire</button>
+    <button class="btn-outline-gold" onclick="ouvrirAuthModal(); document.querySelectorAll('.modal-close')">Se connecter</button>
+  </div>
+</div>
+
+<section id="categories">
+  <div class="section-head">
+    <h2>Catégories</h2>
+    <p>Choisis une catégorie pour voir toutes les boutiques disponibles.</p>
+  </div>
+  <div class="cat-grid" id="cat-grid"></div>
+  <div id="shop-panel">
+    <div class="shop-panel-head">
+      <h3 id="shop-panel-title">Boutique</h3>
+      <button id="close-shop" onclick="closeShopPanel()">✕</button>
+    </div>
+    <div class="products-grid" id="shop-products"></div>
+  </div>
+</section>
+
+<section id="shops-section">
+  <div class="section-head">
+    <h2 id="shops-title">Boutiques</h2>
+    <p id="shops-sub">Toutes les boutiques de cette catégorie.</p>
+  </div>
+  <div class="shops-grid" id="shops-grid"></div>
+</section>
+
+<footer>JOYFULL · Lubumbashi 🇨🇩</footer>
+
+<div id="quiz-bar">
+  <div class="qb-left">
+    <div style="font-size:1.4rem;">🔥</div>
+    <div><h4>Quiz du jour</h4><p>Série : 3 jours</p></div>
+  </div>
+  <a href="#">Jouer (colle ton lien Forms)</a>
+</div>
+
+<!-- PANIER -->
+<div id="cart-overlay" onclick="toggleCart(false)"></div>
+<div id="cart-drawer">
+  <div class="cart-head"><h3>Ton panier</h3><button id="close-cart" onclick="toggleCart(false)">✕</button></div>
+  <div id="cart-items"><div id="empty-msg">Ton panier est vide pour l'instant.</div></div>
+  <div class="cart-foot">
+    <div class="cart-total"><span>Total</span><span id="cart-total-amount">0 $</span></div>
+    <button id="checkout-btn" disabled onclick="confirmOrder()">Confirmer ma commande</button>
+    <p class="pay-note">Paiement à la livraison — Mobile Money ou cash 🤝</p>
+  </div>
+</div>
+
+<div id="confirm-overlay">
+  <div id="confirm-box">
+    <div class="check">✅</div>
+    <h3>Commande confirmée !</h3>
+    <p style="color:var(--sub); font-size:0.88rem; margin:10px 0 16px;">Ta commande <span id="order-id">#0000</span> est enregistrée. Notre équipe te contacte pour la livraison.</p>
+    <button onclick="closeConfirm()">Continuer mes achats</button>
+  </div>
+</div>
+
+<!-- MODAL AUTH -->
+<div id="authModal" class="modal-overlay">
+  <div class="modal-box">
+    <button class="modal-close" onclick="fermerAuthModal()">✕</button>
+    <h2>Rejoindre JOYFULL</h2>
+    <div class="role-selector">
+      <label><input type="radio" name="userRole" value="acheteur" checked> Acheteur</label>
+      <label><input type="radio" name="userRole" value="vendeur"> Vendeur</label>
+    </div>
+    <input type="text" id="authName" placeholder="Nom complet ou nom de boutique">
+    <input type="email" id="authEmail" placeholder="Adresse e-mail">
+    <input type="password" id="authPassword" placeholder="Mot de passe">
+    <button class="btn-submit" onclick="traiterInscription()">Créer mon compte</button>
+    <button class="btn-google" onclick="traiterConnexionGoogle()">
+      <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" width="18" alt="G">
+      Continuer avec Google
+    </button>
+  </div>
+</div>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+  import { getAuth, createUserWithEmailAndPassword, signInWithPopup, GoogleAuthProvider, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+  import { getFirestore, doc, setDoc, getDoc, collection, addDoc, onSnapshot, query, orderBy } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+  // ⚠️ REMPLACE PAR TES VRAIES VALEURS ⚠️
+  // console.firebase.google.com → projet joyfull-a1fba → ⚙️ Paramètres du projet
+  // → descends jusqu'à "Vos applications" → copie l'objet firebaseConfig affiché
+  const firebaseConfig = {
+    apiKey: "COLLE_TA_VRAIE_CLE_ICI",
+    authDomain: "joyfull-a1fba.firebaseapp.com",
+    projectId: "joyfull-a1fba",
+    storageBucket: "joyfull-a1fba.appspot.com",
+    messagingSenderId: "COLLE_TON_VRAI_ID_ICI",
+    appId: "COLLE_TON_VRAI_APPID_ICI"
+  };
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  const db = getFirestore(app);
+  let utilisateurActuel = null;
+
+  window.openSidebar = () => { document.getElementById('sidebar').classList.add('open'); document.getElementById('sidebar-overlay').classList.add('open'); };
+  window.closeSidebar = () => { document.getElementById('sidebar').classList.remove('open'); document.getElementById('sidebar-overlay').classList.remove('open'); };
+
+  onAuthStateChanged(auth, async (user) => {
+    if (user){
+      utilisateurActuel = user;
+      document.getElementById("sidebar-username").innerText = user.displayName || user.email || "Mon compte";
+    } else {
+      utilisateurActuel = null;
+      document.getElementById("sidebar-username").innerText = "Non connecté";
+    }
+  });
+
+  window.traiterInscription = async function(){
+    const email = document.getElementById("authEmail").value;
+    const password = document.getElementById("authPassword").value;
+    const nom = document.getElementById("authName").value;
+    const role = document.querySelector('input[name="userRole"]:checked').value;
+    if (!email || !password || !nom) return alert("Remplis tous les champs !");
+    try{
+      const res = await createUserWithEmailAndPassword(auth, email, password);
+      await setDoc(doc(db, "users", res.user.uid), { uid:res.user.uid, nom, email, role, createdAt:new Date() });
+      fermerAuthModal();
+      alert("Compte créé avec succès !");
+    } catch(e){ alert("Erreur : " + e.message); }
+  };
+
+  const provider = new GoogleAuthProvider();
+  window.traiterConnexionGoogle = async function(){
+    const role = document.querySelector('input[name="userRole"]:checked').value;
+    try{
+      const res = await signInWithPopup(auth, provider);
+      await setDoc(doc(db, "users", res.user.uid), { uid:res.user.uid, nom:res.user.displayName, email:res.user.email, role, createdAt:new Date() }, { merge:true });
+      fermerAuthModal();
+      alert("Connexion réussie !");
+    } catch(e){ alert("Erreur : " + e.message); }
+  };
+
+  window.ouvrirAuthModal = (role) => {
+    document.getElementById("authModal").classList.add("show");
+    if (role === 'vendeur') document.querySelector('input[name="userRole"][value="vendeur"]').checked = true;
+    closeSidebar();
+  };
+  window.fermerAuthModal = () => document.getElementById("authModal").classList.remove("show");
+
+  // ===== CATALOGUE (boutiques/produits) =====
+  const CATEGORIES = [
+    { id:"nourriture", name:"Nourriture", emoji:"🍲" },
+    { id:"boutique", name:"Boutique", emoji:"🛍️" },
+    { id:"electronique", name:"Accessoires électroniques", emoji:"🎧" },
+    { id:"beaute", name:"Beauté", emoji:"💄" },
+  ];
+  const SHOPS = [
+    { id:1, category:"boutique", name:"Boutique Bila", logo:"🏬", products:[
+      { id:101, name:"Article 1", price:8, emoji:"👗" },
+      { id:102, name:"Article 2", price:12, emoji:"👜" },
+    ]},
+    { id:2, category:"boutique", name:"Boutique Nouvel Ange", logo:"✨", products:[
+      { id:103, name:"Article 1", price:10, emoji:"👟" },
+    ]},
+    { id:3, category:"nourriture", name:"Nom du resto", logo:"🍽️", products:[
+      { id:201, name:"Plat du jour", price:5, emoji:"🍛" },
+    ]},
+  ];
+  const SLOTS_PER_CATEGORY = 6;
+  let activeCategory = CATEGORIES[0].id;
+  let cart = {};
+
+  function allProducts(){ return SHOPS.flatMap(s => s.products.map(p => ({...p, shopName:s.name}))); }
+
+  function renderCategories(){
+    document.getElementById('cat-grid').innerHTML = CATEGORIES.map(c => `
+      <div class="cat-card ${c.id===activeCategory?'active':''}" onclick="selectCategory('${c.id}')">
+        <div class="cat-emoji">${c.emoji}</div><div class="cat-name">${c.name}</div>
+      </div>`).join('');
+  }
+  window.selectCategory = (catId) => { activeCategory=catId; closeShopPanel(); renderCategories(); renderShops(); };
+
+  function renderShops(){
+    const cat = CATEGORIES.find(c=>c.id===activeCategory);
+    document.getElementById('shops-title').textContent = cat.name;
+    document.getElementById('shops-sub').textContent = `Toutes les boutiques "${cat.name}" disponibles sur JOYFULL.`;
+    const shopsInCat = SHOPS.filter(s=>s.category===activeCategory);
+    const emptySlots = Math.max(0, SLOTS_PER_CATEGORY - shopsInCat.length);
+    let html = shopsInCat.map(s => `
+      <div class="shop-card" onclick="openShop(${s.id})">
+        <div class="shop-logo">${s.logo}</div><div class="shop-name">${s.name}</div>
+        <div class="shop-sub">${s.products.length} article(s)</div>
+      </div>`).join('');
+    for(let i=0;i<emptySlots;i++){
+      html += `<div class="shop-card empty"><div class="shop-logo">➕</div><div class="shop-name">Emplacement libre</div><div class="shop-sub">Ajoute une boutique ici</div></div>`;
+    }
+    document.getElementById('shops-grid').innerHTML = html;
+  }
+
+  window.openShop = (shopId) => {
+    const shop = SHOPS.find(s=>s.id===shopId);
+    document.getElementById('shop-panel-title').textContent = shop.name;
+    document.getElementById('shop-products').innerHTML = shop.products.map(p => `
+      <div class="product-card"><div class="product-emoji">${p.emoji}</div><h4>${p.name}</h4>
+        <div class="product-price">${p.price} $</div>
+        <button class="add-btn" onclick="addToCart(${p.id})">Ajouter</button></div>`).join('');
+    document.getElementById('shop-panel').classList.add('open');
+    document.getElementById('shop-panel').scrollIntoView({behavior:'smooth', block:'center'});
+  };
+  window.closeShopPanel = () => document.getElementById('shop-panel').classList.remove('open');
+
+  window.addToCart = (productId) => { cart[productId]=(cart[productId]||0)+1; renderCart(); toggleCart(true); };
+  window.changeQty = (productId, delta) => { cart[productId]=(cart[productId]||0)+delta; if(cart[productId]<=0) delete cart[productId]; renderCart(); };
+
+  function renderCart(){
+    const products = allProducts();
+    const itemsEl = document.getElementById('cart-items');
+    const ids = Object.keys(cart);
+    let total=0, count=0;
+    if(ids.length===0){ itemsEl.innerHTML = '<div id="empty-msg">Ton panier est vide pour l\'instant.</div>'; }
+    else {
+      itemsEl.innerHTML = ids.map(id => {
+        const p = products.find(x=>x.id==id); const qty=cart[id];
+        total += p.price*qty; count += qty;
+        return `<div class="cart-item"><div><div class="ci-name">${p.name}</div><div class="ci-price">${p.shopName} · ${p.price} $ x ${qty}</div></div>
+          <div class="qty-controls"><button onclick="changeQty(${p.id},-1)">−</button><span>${qty}</span><button onclick="changeQty(${p.id},1)">+</button></div></div>`;
+      }).join('');
+    }
+    document.getElementById('cart-count').textContent = count;
+    document.getElementById('cart-total-amount').textContent = total + ' $';
+    document.getElementById('checkout-btn').disabled = count===0;
+  }
+  window.toggleCart = (open) => { document.getElementById('cart-drawer').classList.toggle('open',open); document.getElementById('cart-overlay').classList.toggle('open',open); };
+
+  window.confirmOrder = () => {
+    if(Object.keys(cart).length===0) return;
+    document.getElementById('order-id').textContent = '#' + Math.floor(1000+Math.random()*9000);
+    document.getElementById('confirm-overlay').classList.add('open');
+    toggleCart(false); cart={}; renderCart();
+  };
+  window.closeConfirm = () => document.getElementById('confirm-overlay').classList.remove('open');
+
+  renderCategories(); renderShops(); renderCart();
+</script>
+</body>
+</html>
